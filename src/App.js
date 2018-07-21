@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import LogIn from './LogIn'
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -25,13 +26,7 @@ class App extends Component {
 
   renderLogInForm = () => {
     return (
-      <div>
-        <form onSubmit={this.logger}>
-          Username: <input type="text" /><br />
-          Password: <input type="text" /><br />
-          <button>Log In</button>
-        </form>
-      </div>
+      <LogIn />
     )
   }
 
@@ -48,4 +43,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
