@@ -8,7 +8,9 @@ class App extends Component {
     super(props)
 
     this.state = {
-      logged: false
+      logged: false,
+      username: "",
+      password: ""
     }
   }
 
@@ -19,21 +21,33 @@ class App extends Component {
   logger = (e) => {
     e.preventDefault()
 
+    // Have to somehow actually log in a user before changing state
+
     this.setState({
       logged: true
     })
   }
 
+  handleInput = (input) => {
+    this.setState({
+      [input.target.id]: input.target.value
+    })
+  }
+
   renderLogInForm = () => {
     return (
-      <LogIn />
+      <LogIn logger={this.logger}
+             handleInput={this.handleInput}
+             username={this.state.username}
+             password={this.state.password}>
+      </LogIn>
     )
   }
 
   renderMainForm = () => {
     return (
       <div>
-        <p>Main Form</p>
+        <p>Hello {this.state.username}</p>
       </div>
     )
   }
