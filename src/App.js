@@ -44,10 +44,19 @@ class App extends Component {
     )
   }
 
+  logout = () => {
+    this.setState({
+      logged: false,
+      username: "",
+      password: ""
+    })
+  }
+
   renderMainForm = () => {
     return (
       <div>
         <p>Hello {this.state.username}</p>
+        <button onClick={this.logout}>Log out</button>
       </div>
     )
   }
