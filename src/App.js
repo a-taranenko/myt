@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import LogIn from './LogIn'
+import Main from './Main'
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -28,6 +29,14 @@ class App extends Component {
     })
   }
 
+  logout = () => {
+    this.setState({
+      logged: false,
+      username: "",
+      password: ""
+    })
+  }
+
   handleInput = (input) => {
     this.setState({
       [input.target.id]: input.target.value
@@ -44,20 +53,11 @@ class App extends Component {
     )
   }
 
-  logout = () => {
-    this.setState({
-      logged: false,
-      username: "",
-      password: ""
-    })
-  }
-
   renderMainForm = () => {
     return (
-      <div>
-        <p>Hello {this.state.username}</p>
-        <button onClick={this.logout}>Log out</button>
-      </div>
+      <Main logout={this.logout}
+            username={this.state.username}>
+      </Main>
     )
   }
 
