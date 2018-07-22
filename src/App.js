@@ -25,7 +25,8 @@ class App extends Component {
     // Have to somehow actually log in a user before changing state
 
     this.setState({
-      logged: true
+      logged: true,
+      password: ""
     })
   }
 
