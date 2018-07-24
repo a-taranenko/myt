@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import LogIn from './LogIn'
 import Main from './Main'
 // import logo from './logo.svg';
-// import './App.css';
+import './styling/App.css';
 
 class App extends Component {
   constructor(props) {
