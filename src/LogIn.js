@@ -5,7 +5,7 @@ class LogIn extends Component {
   render() {
     return (
       <div className="login-container">
-        <form className="login-form" onSubmit={this.props.logger}>
+        <form className="login-form" onSubmit={this.props.login}>
           <label htmlFor="username">Username</label><br />
           <input type="text"
                  id="username"

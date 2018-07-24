@@ -19,15 +19,24 @@ class App extends Component {
     // will have to determine if the user has logged in or not
   }
 
-  logger = (e) => {
+  loginEntryCheck = () => {
+    if (this.state.username.length !== 0 && this.state.password.length !== 0) return true
+
+    alert('Please fill all required fields')
+    return false
+  }
+
+  login = (e) => {
     e.preventDefault()
 
     // Have to somehow actually log in a user before changing state
 
-    this.setState({
-      logged: true,
-      password: ""
-    })
+    if (this.loginEntryCheck()) {
+      this.setState({
+        logged: true,
+        password: ""
+      })
+    }
   }
 
   logout = () => {
@@ -46,7 +55,7 @@ class App extends Component {
 
   renderLogInForm = () => {
     return (
-      <LogIn logger={this.logger}
+      <LogIn login={this.login}
              handleInput={this.handleInput}
              username={this.state.username}
              password={this.state.password}>
