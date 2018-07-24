@@ -1,14 +1,13 @@
 div.login-container {
   display: table;
   text-align: center;
-  border-style: solid;
-  border-width: 0px;
+  border: 0px solid;
   position: fixed;
   height: 150px;
   width: 160px;
   top: 50%;
   left: 50%;
-  margin-top: -150px;
+  margin-top: -75px;
   margin-left: -80px;
 }
 

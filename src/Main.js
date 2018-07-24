@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './styling/Main.css'
 
 class Main extends Component {
   constructor(props) {
@@ -30,10 +31,12 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="main">
-        <h1>{this.state.companyName}</h1>
-        <p>Hello {this.props.username}</p>
-        <button onClick={this.props.logout}>Log out</button>
+      <div className="main-container">
+        <div className="content-container">
+          <p>{this.state.companyName}</p>
+          <p>Hello {this.props.username}</p>
+          <button id="logout-button" onClick={this.props.logout}>Log out</button>
+        </div>
       </div>
     )
   }

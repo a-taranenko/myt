@@ -1,0 +1,24 @@
+div.main-container {
+  display: table;
+  text-align: center;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  position: fixed;
+  height: 250px;
+  width: 200px;
+  top: 50%;
+  left: 50%;
+  margin-top: -126px;
+  margin-left: -101px;
+}
+
+div.content-container {
+  display: table-cell;
+  vertical-align: middle;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#logout-button {
+  margin-top: 5px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
