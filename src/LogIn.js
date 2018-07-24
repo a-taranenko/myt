@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import './styling/LogIn.css'
 
 class LogIn extends Component {
   render() {
     return (
-      <div className="login">
-        <form onSubmit={this.props.logger}>
+      <div className="login-container">
+        <form className="login-form" onSubmit={this.props.logger}>
           <label htmlFor="username">Username</label><br />
           <input type="text"
                  id="username"
@@ -15,7 +16,7 @@ class LogIn extends Component {
                  id="password"
                  value={this.props.password}
                  onChange={this.props.handleInput} /><br />
-          <button>Log In</button>
+          <button id="login-button">Log In</button>
         </form>
       </div>
     )
