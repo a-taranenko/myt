@@ -13,10 +13,18 @@ class Main extends Component {
   componentWillMount() {
     // The following is just temporary
     // Need to call db to get the following info
+    let companyName, superUser
+    if (this.props.username === 'Anton' || this.props.username === 'Tantely') {
+      companyName = 'MyT'
+      superUser = true
+    } else {
+      companyName = 'Default Company Name'
+      superUser = false
+    }
 
     this.setState({
-      companyName: "Default Company Name",
-      superUser: true
+      companyName: companyName,
+      superUser: superUser
     })
   }
 
