@@ -22,8 +22,8 @@ class App extends Component {
   loginEntryCheck = () => {
     if (this.state.username.length !== 0 && this.state.password.length !== 0) return true
 
-    // alert('Please fill all required fields')
-    alert('Looks like you do not have a username or password.\nGet a username and password for just 10 bitcoin at imjustjoking.com')
+    alert('Please fill all required fields')
+
     return false
   }
 
