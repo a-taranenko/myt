@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Company from './Company'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -13,8 +14,8 @@ class Main extends Component {
   componentWillMount() {
     // The following is just temporary
     // Need to call db to get company data for the logged user
-    let companies = ['CompOne', 'CompTwo']
-    if (this.props.role === 'admin') companies.push('MyT')
+    let companies = [ {companyName: 'CompOne'}, {companyName: 'CompTwo'} ]
+    if (this.props.role === 'admin') companies.push({ companyName: 'MyT' })
 
     this.setState({
       companies: [...companies]
@@ -23,7 +24,9 @@ class Main extends Component {
 
   renderCompany = (company, index) => {
     return (
-      <p key={index}>{company}</p>
+      <Company key={index}
+               companyName={company.companyName}>
+      </Company>
     )
   }
 
