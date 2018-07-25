@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       logged: false,
       username: "",
-      password: ""
+      password: "",
+      role: ""
     }
   }
 
@@ -30,12 +31,20 @@ class App extends Component {
   login = (e) => {
     e.preventDefault()
 
-    // Have to somehow actually log in a user before changing state
-
     if (this.loginEntryCheck()) {
+      // Have to somehow actually log in a user before changing state
+      // This is where we call the db to determine who is logging in
+      // Here, we should know determine the role of the user
+      // We should also deal with situations where we cannot find a user
+
+      // The following is only temporary
+      let role = ""
+      if (this.state.username === 'Anton' || this.state.username === 'Tantely') role = "admin"
+
       this.setState({
         logged: true,
-        password: ""
+        password: "",
+        role: role
       })
     }
   }
@@ -44,7 +53,8 @@ class App extends Component {
     this.setState({
       logged: false,
       username: "",
-      password: ""
+      password: "",
+      role: ""
     })
   }
 

@@ -6,34 +6,34 @@ class Main extends Component {
     super(props)
 
     this.state = {
-      companyName: "",
-      superUser: false
+      companies: []
     }
   }
 
   componentWillMount() {
     // The following is just temporary
-    // Need to call db to get the following info
-    let companyName, superUser
-    if (this.props.username === 'Anton' || this.props.username === 'Tantely') {
-      companyName = 'MyT'
-      superUser = true
-    } else {
-      companyName = 'Default Company Name'
-      superUser = false
-    }
+    // Need to call db to get company data for the logged user
+    let companies = ['CompOne, CompTwo']
+    if (this.props.username === 'Anton' || this.props.username === 'Tantely') companies.push('MyT')
 
     this.setState({
-      companyName: companyName,
-      superUser: superUser
+      companies: [...companies]
     })
   }
 
+  renderCompany = (company, index) => {
+    return (
+      <p key={index}>{company}</p>
+    )
+  }
+
   render() {
+    let companyList = this.state.companies.map((company, index) => this.renderCompany(company, index))
+
     return (
       <div className="main-container">
         <div className="content-container">
-          <p>{this.state.companyName}</p>
+          {companyList}
           <p>Hello {this.props.username}</p>
           <button id="logout-button" onClick={this.props.logout}>Log out</button>
         </div>
