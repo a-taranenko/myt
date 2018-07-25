@@ -13,8 +13,8 @@ class Main extends Component {
   componentWillMount() {
     // The following is just temporary
     // Need to call db to get company data for the logged user
-    let companies = ['CompOne, CompTwo']
-    if (this.props.username === 'Anton' || this.props.username === 'Tantely') companies.push('MyT')
+    let companies = ['CompOne', 'CompTwo']
+    if (this.props.role === 'admin') companies.push('MyT')
 
     this.setState({
       companies: [...companies]

@@ -10,9 +10,9 @@ class App extends Component {
 
     this.state = {
       logged: false,
-      username: "",
-      password: "",
-      role: ""
+      username: '',
+      password: '',
+      role: ''
     }
   }
 
@@ -38,12 +38,12 @@ class App extends Component {
       // We should also deal with situations where we cannot find a user
 
       // The following is only temporary
-      let role = ""
-      if (this.state.username === 'Anton' || this.state.username === 'Tantely') role = "admin"
+      let role = ''
+      if (this.state.username === 'Anton' || this.state.username === 'Tantely') role = 'admin'
 
       this.setState({
         logged: true,
-        password: "",
+        password: '',
         role: role
       })
     }
@@ -52,9 +52,9 @@ class App extends Component {
   logout = () => {
     this.setState({
       logged: false,
-      username: "",
-      password: "",
-      role: ""
+      username: '',
+      password: '',
+      role: ''
     })
   }
 
@@ -77,7 +77,8 @@ class App extends Component {
   renderMainForm = () => {
     return (
       <Main logout={this.logout}
-            username={this.state.username}>
+            username={this.state.username}
+            role={this.state.role}>
       </Main>
     )
   }
