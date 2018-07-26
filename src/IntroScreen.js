@@ -18,7 +18,10 @@ class IntroScreen extends Component {
     return (
       <div className="main-container">
         <div className="content-container">
-          <p>Hello {this.props.username}<br />Please select from the following list:</p>
+          <p>Hello {this.props.username}<br />
+             Your role is: {this.props.role}<br />
+             Please select from the following list:
+          </p>
           {companyList}
           <button id="logout-button" onClick={this.props.logout}>Log out</button>
         </div>

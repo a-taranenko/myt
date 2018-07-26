@@ -10,6 +10,7 @@ class Company extends Component {
     return (
       <div>
         <p>{this.props.company.companyName}</p>
+        <p>Your role: {this.props.role}</p>
         <button id="deselect-company-button" onClick={this.props.deselectCompany}>Deselect</button>
       </div>
     )

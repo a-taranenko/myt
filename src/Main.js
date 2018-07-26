@@ -26,6 +26,8 @@ class Main extends Component {
   }
 
   selectCompany = (index) => {
+    if (this.props.role !== 'admin') this.props.assignRole()
+
     this.setState({
       selected: true,
       selectedCompany: [...this.state.companies][index]
@@ -33,6 +35,8 @@ class Main extends Component {
   }
 
   deselectCompany = () => {
+    if (this.props.role !== 'admin') this.props.stripRole()
+
     this.setState({
       selected: false,
       selectedCompany: []
@@ -42,6 +46,7 @@ class Main extends Component {
   renderCompany = () => {
     return (
       <Company company={this.state.selectedCompany}
+               role={this.props.role}
                deselectCompany={this.deselectCompany}>
       </Company>
     )
@@ -52,6 +57,7 @@ class Main extends Component {
       <IntroScreen username={this.props.username}
                    logout={this.props.logout}
                    companies={this.state.companies}
+                   role={this.props.role}
                    selectCompany={this.selectCompany}>
       </IntroScreen>
     )

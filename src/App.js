@@ -64,6 +64,20 @@ class App extends Component {
     })
   }
 
+  assignRole = () => {
+    // Need to call db to get role
+
+    this.setState({
+      role: 'owner'
+    })
+  }
+
+  stripRole = () => {
+    this.setState({
+      role: ''
+    })
+  }
+
   renderLogInForm = () => {
     return (
       <LogIn login={this.login}
@@ -78,7 +92,9 @@ class App extends Component {
     return (
       <Main logout={this.logout}
             username={this.state.username}
-            role={this.state.role}>
+            role={this.state.role}
+            assignRole={this.assignRole}
+            stripRole={this.stripRole}>
       </Main>
     )
   }
