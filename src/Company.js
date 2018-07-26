@@ -8,7 +8,10 @@ class Company extends Component {
 
   render() {
     return (
-      <p>{this.props.company.companyName}</p>
+      <div>
+        <p>{this.props.company.companyName}</p>
+        <button id="deselect-company-button" onClick={this.props.deselectCompany}>Deselect</button>
+      </div>
     )
   }
 }

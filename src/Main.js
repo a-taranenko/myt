@@ -33,12 +33,16 @@ class Main extends Component {
   }
 
   deselectCompany = () => {
-
+    this.setState({
+      selected: false,
+      selectedCompany: []
+    })
   }
 
   renderCompany = () => {
     return (
-      <Company company={this.state.selectedCompany}>
+      <Company company={this.state.selectedCompany}
+               deselectCompany={this.deselectCompany}>
       </Company>
     )
   }
