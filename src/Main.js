@@ -7,7 +7,8 @@ class Main extends Component {
     super(props)
 
     this.state = {
-      companies: []
+      companies: [],
+      selected: false
     }
   }
 
@@ -30,7 +31,7 @@ class Main extends Component {
     )
   }
 
-  render() {
+  renderIntro = () => {
     let companyList = this.state.companies.map((company, index) => this.renderCompany(company, index))
 
     return (
@@ -42,6 +43,14 @@ class Main extends Component {
         </div>
       </div>
     )
+  }
+
+  render() {
+    if (this.state.selected) {
+      return this.renderCompany()
+    } else {
+      return this.renderIntro()
+    }
   }
 }
 
