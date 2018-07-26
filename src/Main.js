@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
+import IntroScreen from './IntroScreen'
 import Company from './Company'
-import CompanySelection from './CompanySelection'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -9,8 +9,8 @@ class Main extends Component {
 
     this.state = {
       companies: [],
+      selectedCompany: [],
       selected: false,
-      selection: 0
     }
   }
 
@@ -25,49 +25,36 @@ class Main extends Component {
     })
   }
 
-  renderCompany = (index) => {
+  selectCompany = (index) => {
+    this.setState({
+      selected: true,
+      selectedCompany: [...this.state.companies][index]
+    })
+  }
+
+  deselectCompany = () => {
+
+  }
+
+  renderCompany = () => {
     return (
-      <Company key={index}
-               company={this.state.companies[index]}>
+      <Company company={this.state.selectedCompany}>
       </Company>
     )
   }
 
-  selectCompany = (index) => {
-    this.setState({
-      selected: true,
-      selection: index
-    })
-  }
-
-  rendenIntro = () => {
-    let companyList = this.state.companies.map((company, index) => {
-      return (
-        <CompanySelection key={index}
-                          index={index}
-                          selectCompany={this.selectCompany}>
-                          {company.companyName}
-        </CompanySelection>
-      )
-    })
-
+  renderIntroScreen = () => {
     return (
-      <div className="main-container">
-        <div className="content-container">
-          <p>Hello {this.props.username}<br/>Please select from the following list:</p>
-          {companyList}
-          <button id="logout-button" onClick={this.props.logout}>Log out</button>
-        </div>
-      </div>
+      <IntroScreen username={this.props.username}
+                   logout={this.props.logout}
+                   companies={this.state.companies}
+                   selectCompany={this.selectCompany}>
+      </IntroScreen>
     )
   }
 
   render() {
-    if (this.state.selected) {
-      return this.renderCompany(this.state.selection)
-    } else {
-      return this.rendenIntro()
-    }
+    return (this.state.selected ? this.renderCompany() : this.renderIntroScreen() )
   }
 }
 
