@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import CompanySelection from './CompanySelection'
 
 class IntroScreen extends Component {
+  selectCompany = (e, index) => {
+    this.props.selectCompany(index)
+  }
+
   renderCompanySelection = (company, index) => {
     return (
-      <CompanySelection key={index}
-                        index={index}
-                        selectCompany={this.props.selectCompany}>
-                        {company.companyName}
-      </CompanySelection>
+      <p key={index}
+         onClick={(e) => this.selectCompany(e, index)}>
+         {company.companyName}
+      </p>
     )
   }
 
