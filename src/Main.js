@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Company from './Company'
+import CompanySelection from './CompanySelection'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -8,7 +9,8 @@ class Main extends Component {
 
     this.state = {
       companies: [],
-      selected: false
+      selected: false,
+      selection: 0
     }
   }
 
@@ -16,29 +18,44 @@ class Main extends Component {
     // The following is just temporary
     // Need to call db to get company data for the logged user
     let companies = [ {companyName: 'CompOne'}, {companyName: 'CompTwo'} ]
-    if (this.props.role === 'admin') companies.push({ companyName: 'MyT' })
+    if (this.props.role === 'admin') companies.push( {companyName: 'MyT'} )
 
     this.setState({
       companies: [...companies]
     })
   }
 
-  renderCompany = (company, index) => {
+  renderCompany = (index) => {
     return (
       <Company key={index}
-               companyName={company.companyName}>
+               company={this.state.companies[index]}>
       </Company>
     )
   }
 
-  renderIntro = () => {
-    let companyList = this.state.companies.map((company, index) => this.renderCompany(company, index))
+  selectCompany = (index) => {
+    this.setState({
+      selected: true,
+      selection: index
+    })
+  }
+
+  rendenIntro = () => {
+    let companyList = this.state.companies.map((company, index) => {
+      return (
+        <CompanySelection key={index}
+                          index={index}
+                          selectCompany={this.selectCompany}>
+                          {company.companyName}
+        </CompanySelection>
+      )
+    })
 
     return (
       <div className="main-container">
         <div className="content-container">
+          <p>Hello {this.props.username}<br/>Please select from the following list:</p>
           {companyList}
-          <p>Hello {this.props.username}</p>
           <button id="logout-button" onClick={this.props.logout}>Log out</button>
         </div>
       </div>
@@ -47,9 +64,9 @@ class Main extends Component {
 
   render() {
     if (this.state.selected) {
-      return this.renderCompany()
+      return this.renderCompany(this.state.selection)
     } else {
-      return this.renderIntro()
+      return this.rendenIntro()
     }
   }
 }

@@ -8,7 +8,7 @@ class Company extends Component {
 
   render() {
     return (
-      <p>{this.props.companyName}</p>
+      <p>{this.props.company.companyName}</p>
     )
   }
 }
