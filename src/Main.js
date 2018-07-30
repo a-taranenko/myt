@@ -18,11 +18,52 @@ class Main extends Component {
     // The following is just temporary
     // Need to call db to get company data for the logged user
     // Should we also do a schema check?
+
+    // let self = this
+
+    // fetch('https://myt-world.localtunnel.me/api/v1/companies')
+    //   .then(response => response.json())
+    //   .then(json => {
+    //     if (json.status === 'success') {
+    //       self.setState({
+    //         companies: [...json.data]
+    //       })
+    //     } else {
+    //       // throw error with a proper message
+    //     }
+    //   })
+    //   .catch(error => error)
+
     let companies = [
-      { companyName: 'CompOne', address: '123 Main St.', phone: '4035558888', email: 'contactus@one.com', employees: [], products: [] },
-      { companyName: 'CompTwo', address: '456 Main St.', phone: '4035559999', email: 'contactus@two.com', employees: [], products: [] }
+      {
+        name: 'Blue River Restaurant',
+        address: {
+          suite: '900',
+          streetNumber: '2144',
+          streetName: '11 Avenue SW',
+          city: 'Calgary',
+          province: 'Alberta',
+          country: 'Canada'
+        },
+        phone: '780-710-2550',
+        email: 'leo@blue_river.com'
+      }
     ]
-    let myt = { companyName: 'MyT', address: '123 Evergreen St.', phone: '4035551111', email: 'contactus@myt-world.com', employees: [], products: [] }
+
+    let myt = {
+      name: 'Shawarma Chicken Ltd',
+      address: {
+        suite: '900',
+        streetNumber: '204',
+        streetName: '11 Avenue SW',
+        city: 'Calgary',
+        province: 'Alberta',
+        country: 'Canada'
+      },
+      phone: '403-710-2550',
+      email: 'tantely@shawa_rma.com'
+    }
+
     if (this.props.role === 'admin') companies.push(myt)
 
     this.setState({

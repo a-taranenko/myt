@@ -9,7 +9,7 @@ class IntroScreen extends Component {
     return (
       <p key={index}
          onClick={(e) => this.selectCompany(e, index)}>
-         {company.companyName}
+         {company.name}
       </p>
     )
   }

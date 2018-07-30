@@ -7,10 +7,16 @@ class Company extends Component {
   // }
 
   render() {
+    let companyAddress = this.props.company.address
+    let addressLine = companyAddress.suite + ' ' +
+                      companyAddress.streetNumber + ' ' +
+                      companyAddress.streetName + ' ' +
+                      companyAddress.city + ' ' +
+                      companyAddress.country
     return (
       <div>
-        <p>{this.props.company.companyName}</p>
-        <p>{this.props.company.address}</p>
+        <p>{this.props.company.name}</p>
+        <p>{addressLine}</p>
         <p>{this.props.company.phone}</p>
         <p>{this.props.company.email}</p>
         <p>Your role: {this.props.role}</p>
