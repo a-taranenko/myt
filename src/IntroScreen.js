@@ -15,20 +15,21 @@ class IntroScreen extends Component {
   }
 
   render() {
-    let companyList = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
+    let companyList = 'No companies to report'
+    if (this.props.companies.length !== 0) companyList = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
 
-    return (
-      <div className="main-container">
-        <div className="content-container">
-          <p>Hello {this.props.username}<br />
-             Your role is: {this.props.role}<br />
-             Please select from the following list:
-          </p>
-          {companyList}
-          <button id="logout-button" onClick={this.props.logout}>Log out</button>
+      return (
+        <div className="main-container">
+          <div className="content-container">
+            <p>Hello {this.props.username}<br />
+               Your role is: {this.props.role}<br />
+               Please select from the following list:
+            </p>
+            {companyList}
+            <button id="logout-button" onClick={this.props.logout}>Log out</button>
+          </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 

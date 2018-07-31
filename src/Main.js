@@ -19,56 +19,62 @@ class Main extends Component {
     // Need to call db to get company data for the logged user
     // Should we also do a schema check?
 
-    // let self = this
+    let self = this
 
-    // fetch('https://myt-world.localtunnel.me/api/v1/companies')
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     if (json.status === 'success') {
-    //       self.setState({
-    //         companies: [...json.data]
-    //       })
-    //     } else {
-    //       // throw error with a proper message
-    //     }
-    //   })
-    //   .catch(error => error)
+    fetch('https://myt-world.localtunnel.me/api/v1/companies')
+      .then(response => response.json())
+      .then(json => {
+        if (json.status === 'success') {
+          self.setState({
+            companies: [...json.data]
+          })
+        } else {
+          // throw error with a proper message
+        }
+      })
+      .catch(error => {
+        console.log(error)
 
-    let companies = [
-      {
-        name: 'Blue River Restaurant',
-        address: {
-          suite: '900',
-          streetNumber: '2144',
-          streetName: '11 Avenue SW',
-          city: 'Calgary',
-          province: 'Alberta',
-          country: 'Canada'
-        },
-        phone: '780-710-2550',
-        email: 'leo@blue_river.com'
-      }
-    ]
+        self.setState({
+          companies: []
+        })
+      })
 
-    let myt = {
-      name: 'Shawarma Chicken Ltd',
-      address: {
-        suite: '900',
-        streetNumber: '204',
-        streetName: '11 Avenue SW',
-        city: 'Calgary',
-        province: 'Alberta',
-        country: 'Canada'
-      },
-      phone: '403-710-2550',
-      email: 'tantely@shawa_rma.com'
-    }
+    // let companies = [
+    //   {
+    //     name: 'Blue River Restaurant',
+    //     address: {
+    //       suite: '900',
+    //       streetNumber: '2144',
+    //       streetName: '11 Avenue SW',
+    //       city: 'Calgary',
+    //       province: 'Alberta',
+    //       country: 'Canada'
+    //     },
+    //     phone: '780-710-2550',
+    //     email: 'leo@blue_river.com'
+    //   }
+    // ]
 
-    if (this.props.role === 'admin') companies.push(myt)
+    // let myt = {
+    //   name: 'Shawarma Chicken Ltd',
+    //   address: {
+    //     suite: '900',
+    //     streetNumber: '204',
+    //     streetName: '11 Avenue SW',
+    //     city: 'Calgary',
+    //     province: 'Alberta',
+    //     country: 'Canada'
+    //   },
+    //   phone: '403-710-2550',
+    //   email: 'tantely@shawa_rma.com'
+    // }
 
-    this.setState({
-      companies: [...companies]
-    })
+    // if (this.props.role === 'admin') companies.push(myt)
+
+    // this.setState({
+    //   companies: [...companies]
+    // })
   }
 
   selectCompany = (index) => {
