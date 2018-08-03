@@ -18,12 +18,25 @@ class Main extends Component {
     // The following is just temporary
     // Need to call db to get company data for the logged user
     // Should we also do a schema check?
-
     let self = this
 
-    fetch('https://myt-world.localtunnel.me/api/v1/companies')
-      .then(response => response.json())
-      .then(json => {
+    // let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+    let url = 'https://myt-world.localtunnel.me/api/v1/companies'
+
+    fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      console.log(response)
+      if (response.status === 404) {
+        let error = new Error(`could not connect to ${url}`)
+        throw error
+      }
+      return response.json()
+    }).then(json => {
         if (json.status === 'success') {
           self.setState({
             companies: [...json.data]
@@ -31,13 +44,11 @@ class Main extends Component {
         } else {
           // throw error with a proper message
         }
-      })
-      .catch(error => {
-        console.log(error)
-
+    }).catch((error) => {
         self.setState({
           companies: []
         })
+        console.log(error)
       })
 
     // let companies = [
