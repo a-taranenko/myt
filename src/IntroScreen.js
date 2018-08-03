@@ -7,16 +7,27 @@ class IntroScreen extends Component {
 
   renderCompanySelection = (company, index) => {
     return (
-      <p key={index}
+      <option key={index}
          onClick={(e) => this.selectCompany(e, index)}>
          {company.name}
-      </p>
+      </option>
+    )
+  }
+
+  getCompanyList = () => {
+    let company = 'No companies to report'
+    if (this.props.companies.length !== 0) company = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
+
+    return (
+      <select className="companies">
+        {company}
+      </select>
     )
   }
 
   render() {
-    let companyList = 'No companies to report'
-    if (this.props.companies.length !== 0) companyList = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
+    let companyList
+    (this.props.companies.length !== 0) ? companyList = this.getCompanyList() : (companyList = 'No companies to report')
 
       return (
         <div className="main-container">
@@ -25,7 +36,7 @@ class IntroScreen extends Component {
                Your role is: {this.props.role}<br />
                Please select from the following list:
             </p>
-            {companyList}
+            {companyList}<br />
             <button id="logout-button" onClick={this.props.logout}>Log out</button>
           </div>
         </div>

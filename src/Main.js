@@ -20,10 +20,10 @@ class Main extends Component {
     // Should we also do a schema check?
     let self = this
 
-    // let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+    let proxyurl = 'https://cors-anywhere.herokuapp.com/'
     let url = 'https://myt-world.localtunnel.me/api/v1/companies'
 
-    fetch(url, {
+    fetch(proxyurl + url, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -50,42 +50,6 @@ class Main extends Component {
         })
         console.log(error)
       })
-
-    // let companies = [
-    //   {
-    //     name: 'Blue River Restaurant',
-    //     address: {
-    //       suite: '900',
-    //       streetNumber: '2144',
-    //       streetName: '11 Avenue SW',
-    //       city: 'Calgary',
-    //       province: 'Alberta',
-    //       country: 'Canada'
-    //     },
-    //     phone: '780-710-2550',
-    //     email: 'leo@blue_river.com'
-    //   }
-    // ]
-
-    // let myt = {
-    //   name: 'Shawarma Chicken Ltd',
-    //   address: {
-    //     suite: '900',
-    //     streetNumber: '204',
-    //     streetName: '11 Avenue SW',
-    //     city: 'Calgary',
-    //     province: 'Alberta',
-    //     country: 'Canada'
-    //   },
-    //   phone: '403-710-2550',
-    //   email: 'tantely@shawa_rma.com'
-    // }
-
-    // if (this.props.role === 'admin') companies.push(myt)
-
-    // this.setState({
-    //   companies: [...companies]
-    // })
   }
 
   selectCompany = (index) => {
