@@ -65,10 +65,6 @@ class Main extends Component {
 
   }
 
-  addCompany = () => {
-
-  }
-
   deselectCompany = () => {
     if (this.props.role !== 'admin') this.props.stripRole()
 
@@ -94,8 +90,7 @@ class Main extends Component {
                    companies={this.state.companies}
                    role={this.props.role}
                    selectCompany={this.selectCompany}
-                   deleteCompany={this.deleteCompany}
-                   addCompany={this.addCompany}>
+                   deleteCompany={this.deleteCompany}>
       </IntroScreen>
     )
   }
