@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 
-class IntroScreen extends Component {
+class SelectionScreen extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      add: false,
-      addCompanyFormDivStyle: {
-        visibility: 'hidden',
-        height: '0px'
-      }
+      add: false
     }
   }
 
@@ -21,7 +17,7 @@ class IntroScreen extends Component {
     return (
       <option key={index}
               value={index}>
-         {company.name}
+              {company.name}
       </option>
     )
   }
@@ -38,26 +34,33 @@ class IntroScreen extends Component {
   }
 
   addCompany = () => {
-    let visibility = ((this.state.addCompanyFormDivStyle.visibility === 'hidden') ? 'visible' : 'hidden')
-    let height = ((this.state.addCompanyFormDivStyle.height === '0px') ? '60px' : '0px')
-
     this.setState(prevState => ({
-        add: !prevState.add,
-        addCompanyFormDivStyle: {
-          visibility: visibility,
-          height: height
-        }
+        add: !prevState.add
     }))
   }
 
   renderAddCompanyForm = () => {
+    let containerClass = ((this.state.add) ? 'active-add-company-form-container' : 'collapsed-add-company-form-container')
+    let formClass = ((this.state.add) ? 'active-add-company-form' : 'collapsed-add-company-form')
+
     return (
-      <form className="add-company-form" style={this.state.addCompanyFormDivStyle}>
-        <label htmlFor="username">Phone</label><br />
-        <input type="text"
-               id="phone" /><br />
-        <button id="add-company-button">Submit</button>
-      </form>
+      <div className={containerClass}>
+        <form className={formClass}>
+          <label htmlFor="name">Name</label><br />
+          <input type="text"
+                 id="name" /><br />
+          <label htmlFor="email">Email</label><br />
+          <input type="text"
+                 id="email" /><br />
+          <label htmlFor="phone">Phone</label><br />
+          <input type="text"
+                 id="phone" /><br />
+          <label htmlFor="suite">Suite</label><br />
+          <input type="text"
+                 id="suite" /><br />
+          <button id="add-company-button">Submit</button>
+        </form>
+      </div>
     )
   }
 
@@ -83,4 +86,4 @@ class IntroScreen extends Component {
   }
 }
 
-export default IntroScreen
+export default SelectionScreen
