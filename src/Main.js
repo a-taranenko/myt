@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import SelectionScreen from './SelectionScreen'
 import Company from './Company'
+import {companyFieldObject} from './companyData'
+import {companyJsonConverter} from './companyData'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -11,17 +13,7 @@ class Main extends Component {
       companies: [],
       selectedCompany: [],
       selected: false,
-      newCompany: {
-        name: '',
-        email: '',
-        phone: '',
-        suite: '',
-        streetNumber: '',
-        streetName: '',
-        city: '',
-        province: '',
-        country: ''
-      }
+      newCompany: companyFieldObject
     }
   }
 
@@ -131,38 +123,16 @@ class Main extends Component {
   }
 
   submitCompany = () => {
-    // convert object, fetch post
+    let companyJson = companyJsonConverter(this.state.newCompany)
+    // fetch()
 
     this.setState({
-      newCompany: {
-        name: '',
-        email: '',
-        phone: '',
-        suite: '',
-        streetNumber: '',
-        streetName: '',
-        city: '',
-        province: '',
-        country: ''
-      }
+      newCompany: companyFieldObject
     })
-  }
-
-  getCompanyKey = (id) => {
-    let elementIdArray = id.split('-')
-
-    if (elementIdArray.length === 1) return elementIdArray[0]
-
-    let newKeyArray = elementIdArray.map((element, index) => {
-      if (index !== 0) return (element.charAt(0).toUpperCase() + element.slice(1, element.length))
-      return element
-    })
-
-    return newKeyArray.join('')
   }
 
   handleInput = (input) => {
-    let companyField = this.getCompanyKey(input.target.id)
+    let companyField = input.target.id
     let companyFieldData = input.target.value
 
     this.setState(prevState => ({

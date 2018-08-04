@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {getFieldName} from './utilityFunctions'
 
 class SelectionScreen extends Component {
   constructor(props) {
@@ -52,15 +53,13 @@ class SelectionScreen extends Component {
   renderAddCompanyForm = () => {
     let containerClass = ((this.state.add) ? 'active-add-company-form-container' : 'collapsed-add-company-form-container')
     let formClass = ((this.state.add) ? 'active-add-company-form' : 'collapsed-add-company-form')
-
-    let companyData = ['Name', 'Email', 'Phone', 'Suite', 'Street Number', 'Street Name', 'City', 'Province', 'Country']
-    let companyDataFields = companyData.map((field, index) => {
+    let formFields = Object.keys(this.props.newCompany).map((field, index) => {
       return (
         <div key={index}>
-          <label htmlFor={field.toLowerCase().split(' ').join('-')}>{field}</label> <br />
+          <label htmlFor={field}>{getFieldName(field)}</label> <br />
           <input type="text"
-                 id={field.toLowerCase().split(' ').join('-')}
-                 value={this.props.newCompany[Object.keys(this.props.newCompany)[index]]}
+                 id={field}
+                 value={this.props.newCompany[field]}
                  onChange={this.props.handleInput}/> <br />
         </div>
       )
@@ -69,7 +68,7 @@ class SelectionScreen extends Component {
     return (
       <div className={containerClass}>
         <form className={formClass} onSubmit={this.submitCompany}>
-          {companyDataFields}
+          {formFields}
           <button id="add-company-button">Submit</button>
         </form>
       </div>
