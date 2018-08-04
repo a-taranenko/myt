@@ -10,7 +10,18 @@ class Main extends Component {
     this.state = {
       companies: [],
       selectedCompany: [],
-      selected: false
+      selected: false,
+      newCompany: {
+        name: '',
+        email: '',
+        phone: '',
+        suite: '',
+        streetNumber: '',
+        streetName: '',
+        city: '',
+        province: '',
+        country: ''
+      }
     }
   }
 
@@ -106,10 +117,6 @@ class Main extends Component {
     })
   }
 
-  deleteCompany = () => {
-
-  }
-
   deselectCompany = () => {
     if (this.props.role !== 'admin') this.props.stripRole()
 
@@ -117,6 +124,53 @@ class Main extends Component {
       selected: false,
       selectedCompany: []
     })
+  }
+
+  deleteCompany = () => {
+
+  }
+
+  submitCompany = () => {
+    // convert object, fetch post
+
+    this.setState({
+      newCompany: {
+        name: '',
+        email: '',
+        phone: '',
+        suite: '',
+        streetNumber: '',
+        streetName: '',
+        city: '',
+        province: '',
+        country: ''
+      }
+    })
+  }
+
+  getCompanyKey = (id) => {
+    let elementIdArray = id.split('-')
+
+    if (elementIdArray.length === 1) return elementIdArray[0]
+
+    let newKeyArray = elementIdArray.map((element, index) => {
+      if (index !== 0) return (element.charAt(0).toUpperCase() + element.slice(1, element.length))
+      return element
+    })
+
+    return newKeyArray.join('')
+  }
+
+  handleInput = (input) => {
+    let companyField = this.getCompanyKey(input.target.id)
+    let companyFieldData = input.target.value
+
+    this.setState(prevState => ({
+      newCompany: {
+        ...prevState.newCompany,
+        [companyField]: companyFieldData
+      }
+    }))
   }
 
   renderCompany = () => {
@@ -135,7 +189,10 @@ class Main extends Component {
                    companies={this.state.companies}
                    role={this.props.role}
                    selectCompany={this.selectCompany}
-                   deleteCompany={this.deleteCompany}>
+                   deleteCompany={this.deleteCompany}
+                   handleInput={this.handleInput}
+                   newCompany={this.state.newCompany}
+                   submitCompany={this.submitCompany}>
       </SelectionScreen>
     )
   }

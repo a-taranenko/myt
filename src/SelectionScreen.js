@@ -35,35 +35,40 @@ class SelectionScreen extends Component {
 
   addCompany = () => {
     this.setState(prevState => ({
-        add: !prevState.add
+      add: !prevState.add
     }))
   }
 
-  submitNewCompany = (e) => {
+  submitCompany = (e) => {
     e.preventDefault()
 
-    this.setState(prevState => ({
-      add: !prevState.add
-    }))
+    this.props.submitCompany()
+
+    this.setState({
+      add: false
+    })
   }
 
   renderAddCompanyForm = () => {
     let containerClass = ((this.state.add) ? 'active-add-company-form-container' : 'collapsed-add-company-form-container')
     let formClass = ((this.state.add) ? 'active-add-company-form' : 'collapsed-add-company-form')
+
     let companyData = ['Name', 'Email', 'Phone', 'Suite', 'Street Number', 'Street Name', 'City', 'Province', 'Country']
     let companyDataFields = companyData.map((field, index) => {
       return (
         <div key={index}>
           <label htmlFor={field.toLowerCase().split(' ').join('-')}>{field}</label> <br />
           <input type="text"
-                 id={field.toLowerCase().split(' ').join('-')} /> <br />
+                 id={field.toLowerCase().split(' ').join('-')}
+                 value={this.props.newCompany[Object.keys(this.props.newCompany)[index]]}
+                 onChange={this.props.handleInput}/> <br />
         </div>
       )
     })
 
     return (
       <div className={containerClass}>
-        <form className={formClass} onSubmit={this.submitNewCompany}>
+        <form className={formClass} onSubmit={this.submitCompany}>
           {companyDataFields}
           <button id="add-company-button">Submit</button>
         </form>
