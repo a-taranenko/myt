@@ -30,7 +30,6 @@ class Main extends Component {
         "Content-Type": "application/json"
       }
     }).then(response => {
-      console.log(response)
       if (response.status === 404) {
         let error = new Error(`could not connect to ${url}`)
         throw error
@@ -42,7 +41,8 @@ class Main extends Component {
             companies: [...json.data]
           })
         } else {
-          // throw error with a proper message
+          let error = new Error(`could not retrieve company data`)
+          throw error
         }
     }).catch((error) => {
         self.setState({

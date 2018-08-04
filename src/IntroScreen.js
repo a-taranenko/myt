@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 
 class IntroScreen extends Component {
-  selectCompany = (e, index, action) => {
-    (action === 'select') ? this.props.selectCompany(index) : this.props.deleteCompany(index)
+  handleSelection = (event, action) => {
+    (action === 'select') ? this.props.selectCompany(event.target.value) : this.props.deleteCompany(event.target.value)
   }
 
-  renderCompanySelection = (company, index, action) => {
+  renderCompanySelection = (company, index) => {
     return (
       <option key={index}
-         onClick={(e) => this.selectCompany(e, index, action)}>
+              value={index}>
          {company.name}
       </option>
     )
   }
 
   getCompanyList = (action) => {
-    let company = this.props.companies.map((company, index) => this.renderCompanySelection(company, index, action))
+    let company = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
 
     return (
-      <select className="companies">
+      <select className="companies" defaultValue onChange={(event) => {this.handleSelection(event, action)}}>
+        <option disabled value> -- Select your company -- </option>
         {company}
       </select>
     )
