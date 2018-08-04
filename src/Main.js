@@ -10,7 +10,7 @@ class Main extends Component {
     this.state = {
       companies: [],
       selectedCompany: [],
-      selected: false,
+      selected: false
     }
   }
 

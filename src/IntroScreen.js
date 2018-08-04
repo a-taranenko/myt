@@ -34,18 +34,18 @@ class IntroScreen extends Component {
       companyListDelete = this.getCompanyList('delete')
     }
 
-      return (
-        <div className="main-container">
-          <div className="content-container">
-            <p>Hello {this.props.username}</p>
-            <p>Your role is: {this.props.role}</p>
-            <p>Company: {companyList}</p>
-            <p>Delete company: {companyListDelete}</p>
-            <button id="add-company" onClick={this.props.addCompany}>Add company</button><br />
-            <button id="logout-button" onClick={this.props.logout}>Log out</button>
-          </div>
+    return (
+      <div className="main-container">
+        <div className="content-container">
+          <p>Hello {this.props.username}</p>
+          <p>Your role is: {this.props.role}</p>
+          <p>Company: {companyList}</p>
+          <p>Delete company: {companyListDelete}</p>
+          <button id="add-company" onClick={this.props.addCompany}>Add company</button><br />
+          <button id="logout-button" onClick={this.props.logout}>Log out</button>
         </div>
-      )
+      </div>
+    )
   }
 }
 
