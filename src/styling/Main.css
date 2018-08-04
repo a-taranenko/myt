@@ -31,12 +31,12 @@ div.content-container {
 }
 
 .active-add-company-form {
-  -webkit-transition: all 0.3s linear;
-  height: 180px;
+  /* transition: all 0.2s linear; */
+  height: 375px;
 }
 
 .collapsed-add-company-form {
-  -webkit-transition: all 0.3s linear;
+  /* transition: all 0.2s linear; */
   height: 0px;
   visibility: hidden;
 }
