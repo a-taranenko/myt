@@ -23,81 +23,81 @@ class Main extends Component {
     // Should we also do a schema check?
     let self = this
 
-    // let proxyurl = 'https://cors-anywhere.herokuapp.com/'
-    // let url = 'https://myt-world.localtunnel.me/api/v1/companies'
+    let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+    let url = 'https://myt-world.localtunnel.me/api/v1/companies'
 
-    // fetch(proxyurl + url, {
-    //   method: 'GET',
-    //   mode: 'cors',
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // }).then(response => {
-    //   if (response.status === 404) {
-    //     let error = new Error(`could not connect to ${url}`)
-    //     throw error
-    //   }
-    //   return response.json()
-    // }).then(json => {
-    //     if (json.status === 'success') {
-    //       self.setState({
-    //         companies: [...json.data]
-    //       })
-    //     } else {
-    //       let error = new Error(`could not retrieve company data`)
-    //       throw error
-    //     }
-    // }).catch((error) => {
-    //     self.setState({
-    //       companies: []
-    //     })
-    //     console.log(error)
-    // })
-
-    self.setState({
-      companies: [
-        {
-          id: "COMPANY::1",
-          type: "company",
-          subType: "restaurant",
-          name: "Blue River Restaurant",
-          email: "leo@blue_river.com",
-          phone: "780-710-2550",
-          address: {
-            suite: "900",
-            streetNumber: "214",
-            streetName: "11 Avenue SW",
-            city: "Calgary",
-            province: "Alberta",
-            country: "Canada",
-            geo: {
-              lat: "-9.117047399999999",
-              lng: "38.7626105"
-            }
-          }
-        },
-        {
-          id: "COMPANY::2",
-          type: "company",
-          subType: "restaurant",
-          name: "Shawarma Chicken Ltd",
-          email: "tantely@shawa_rma.com",
-          phone: "403-710-2550",
-          address: {
-            suite: "900",
-            streetNumber: "204",
-            streetName: "11 Avenue SW",
-            city: "Calgary",
-            province: "Alberta",
-            country: "Canada",
-            geo: {
-              lat: "-10.117047399999999",
-              lng: "39.7626105"
-            }
-          }
+    fetch(proxyurl + url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      if (response.status === 404) {
+        let error = new Error(`could not connect to ${url}`)
+        throw error
+      }
+      return response.json()
+    }).then(json => {
+        if (json.status === 'success') {
+          self.setState({
+            companies: [...json.data]
+          })
+        } else {
+          let error = new Error(`could not retrieve company data`)
+          throw error
         }
-      ]
+    }).catch((error) => {
+        self.setState({
+          companies: []
+        })
+        console.log(error)
     })
+
+    // self.setState({
+    //   companies: [
+    //     {
+    //       id: "COMPANY::1",
+    //       type: "company",
+    //       subType: "restaurant",
+    //       name: "Blue River Restaurant",
+    //       email: "leo@blue_river.com",
+    //       phone: "780-710-2550",
+    //       address: {
+    //         suite: "900",
+    //         streetNumber: "214",
+    //         streetName: "11 Avenue SW",
+    //         city: "Calgary",
+    //         province: "Alberta",
+    //         country: "Canada",
+    //         geo: {
+    //           lat: "-9.117047399999999",
+    //           lng: "38.7626105"
+    //         }
+    //       }
+    //     },
+    //     {
+    //       id: "COMPANY::2",
+    //       type: "company",
+    //       subType: "restaurant",
+    //       name: "Shawarma Chicken Ltd",
+    //       email: "tantely@shawa_rma.com",
+    //       phone: "403-710-2550",
+    //       address: {
+    //         suite: "900",
+    //         streetNumber: "204",
+    //         streetName: "11 Avenue SW",
+    //         city: "Calgary",
+    //         province: "Alberta",
+    //         country: "Canada",
+    //         geo: {
+    //           lat: "-10.117047399999999",
+    //           lng: "39.7626105"
+    //         }
+    //       }
+    //     }
+    //   ]
+    // })
   }
 
   selectCompany = (index) => {
@@ -124,10 +124,33 @@ class Main extends Component {
 
   submitCompany = () => {
     let companyJson = companyJsonConverter(this.state.newCompany)
-    // fetch()
+    let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+    let url = 'https://myt-world.localtunnel.me/api/v1/companies'
+    let self = this
 
-    this.setState({
-      newCompany: companyFieldObject
+    fetch(proxyurl + url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(companyJson)
+    }).then(response => {
+      if (response.status === 404) {
+        let error = new Error(`could not connect to ${url}`)
+        throw error
+      }
+      return response.json()
+    }).then(json => {
+      console.log(json)
+      self.setState({
+        newCompany: companyFieldObject
+      })
+    }).catch((error) => {
+      self.setState({
+        newCompany: companyFieldObject
+      })
+      console.log(error)
     })
   }
 
