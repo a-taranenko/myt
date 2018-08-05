@@ -3,6 +3,7 @@ import SelectionScreen from './SelectionScreen'
 import Company from './Company'
 import {companyFieldObject} from './companyData'
 import {companyJsonConverter} from './companyData'
+import {getData} from './utilityFunctions'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -22,23 +23,10 @@ class Main extends Component {
     // Need to call db to get company data for the logged user
     // Should we also do a schema check?
     let self = this
-
-    let proxyurl = 'https://cors-anywhere.herokuapp.com/'
     let url = 'https://myt-world.localtunnel.me/api/v1/companies'
 
-    fetch(proxyurl + url, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      if (response.status === 404) {
-        let error = new Error(`could not connect to ${url}`)
-        throw error
-      }
-      return response.json()
-    }).then(json => {
+    getData(url)
+      .then(json => {
         if (json.status === 'success') {
           self.setState({
             companies: [...json.data]
@@ -47,12 +35,12 @@ class Main extends Component {
           let error = new Error(`could not retrieve company data`)
           throw error
         }
-    }).catch((error) => {
+      }).catch((error) => {
         self.setState({
           companies: []
         })
         console.log(error)
-    })
+      })
 
     // self.setState({
     //   companies: [

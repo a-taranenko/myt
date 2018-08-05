@@ -20,3 +20,23 @@ export function getFieldName(field) {
   upperCaseFields.push(updatedField.substring(previousUpperCaseIndex, updatedField.length))
   return upperCaseFields.join(' ')
 }
+
+export const getData = (url) => {
+  let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+
+  return (
+    fetch(proxyurl + url, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      if (response.status === 404) {
+        let error = new Error(`could not connect to ${url}`)
+        throw error
+      }
+      return response.json()
+    }).catch(error => {throw error})
+  )
+}
