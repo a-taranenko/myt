@@ -19,12 +19,8 @@ class Main extends Component {
     }
   }
 
-  componentWillMount() {
-    // The following is just temporary
-    // Need to call db to get company data for the logged user
-    // Should we also do a schema check?
+  getCompanyData = (url) => {
     let self = this
-    let url = 'https://myt-world.localtunnel.me/api/v1/companies'
 
     getData(url)
       .then(json => {
@@ -42,6 +38,37 @@ class Main extends Component {
         })
         console.log(error)
       })
+  }
+
+  postCompanyData = (url, data) => {
+    let self = this
+
+    return (
+      postData(url, data)
+        .then(json => {
+          if (json.status === 'success') {
+            self.setState({
+              newCompany: companyFieldObject
+            })
+          } else {
+            let error = new Error(`could not save company data`)
+            throw error
+          }
+        }).catch((error) => {
+          self.setState({
+            newCompany: companyFieldObject
+          })
+          console.log(error)
+        })
+    )
+  }
+
+  componentWillMount() {
+    // The following is just temporary
+    // Need to call db to get company data for the logged user
+    // Should we also do a schema check?
+
+    this.getCompanyData('https://myt-world.localtunnel.me/api/v1/companies')
   }
 
   selectCompany = (index) => {
@@ -69,19 +96,10 @@ class Main extends Component {
   submitCompany = () => {
     let companyJson = companyJsonConverter(this.state.newCompany)
     let url = 'https://myt-world.localtunnel.me/api/v1/companies'
-    let self = this
 
-    postData(url, companyJson)
-      .then(json => {
-        console.log(json)
-        self.setState({
-          newCompany: companyFieldObject
-        })
-      }).catch((error) => {
-        self.setState({
-          newCompany: companyFieldObject
-        })
-        console.log(error)
+    this.postCompanyData(url, companyJson)
+      .then(data => {
+        this.getCompanyData(url)
       })
   }
 
