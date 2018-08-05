@@ -40,3 +40,24 @@ export const getData = (url) => {
     }).catch(error => {throw error})
   )
 }
+
+export const postData = (url, data) => {
+  let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+
+  return (
+    fetch(proxyurl + url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.status === 404) {
+        let error = new Error(`could not connect to ${url}`)
+        throw error
+      }
+      return response.json()
+    }).catch(error => { throw error })
+  )
+}

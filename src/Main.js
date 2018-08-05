@@ -4,6 +4,7 @@ import Company from './Company'
 import {companyFieldObject} from './companyData'
 import {companyJsonConverter} from './companyData'
 import {getData} from './utilityFunctions'
+import {postData} from './utilityFunctions'
 import './styling/Main.css'
 
 class Main extends Component {
@@ -41,51 +42,6 @@ class Main extends Component {
         })
         console.log(error)
       })
-
-    // self.setState({
-    //   companies: [
-    //     {
-    //       id: "COMPANY::1",
-    //       type: "company",
-    //       subType: "restaurant",
-    //       name: "Blue River Restaurant",
-    //       email: "leo@blue_river.com",
-    //       phone: "780-710-2550",
-    //       address: {
-    //         suite: "900",
-    //         streetNumber: "214",
-    //         streetName: "11 Avenue SW",
-    //         city: "Calgary",
-    //         province: "Alberta",
-    //         country: "Canada",
-    //         geo: {
-    //           lat: "-9.117047399999999",
-    //           lng: "38.7626105"
-    //         }
-    //       }
-    //     },
-    //     {
-    //       id: "COMPANY::2",
-    //       type: "company",
-    //       subType: "restaurant",
-    //       name: "Shawarma Chicken Ltd",
-    //       email: "tantely@shawa_rma.com",
-    //       phone: "403-710-2550",
-    //       address: {
-    //         suite: "900",
-    //         streetNumber: "204",
-    //         streetName: "11 Avenue SW",
-    //         city: "Calgary",
-    //         province: "Alberta",
-    //         country: "Canada",
-    //         geo: {
-    //           lat: "-10.117047399999999",
-    //           lng: "39.7626105"
-    //         }
-    //       }
-    //     }
-    //   ]
-    // })
   }
 
   selectCompany = (index) => {
@@ -112,34 +68,21 @@ class Main extends Component {
 
   submitCompany = () => {
     let companyJson = companyJsonConverter(this.state.newCompany)
-    let proxyurl = 'https://cors-anywhere.herokuapp.com/'
     let url = 'https://myt-world.localtunnel.me/api/v1/companies'
     let self = this
 
-    fetch(proxyurl + url, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(companyJson)
-    }).then(response => {
-      if (response.status === 404) {
-        let error = new Error(`could not connect to ${url}`)
-        throw error
-      }
-      return response.json()
-    }).then(json => {
-      console.log(json)
-      self.setState({
-        newCompany: companyFieldObject
+    postData(url, companyJson)
+      .then(json => {
+        console.log(json)
+        self.setState({
+          newCompany: companyFieldObject
+        })
+      }).catch((error) => {
+        self.setState({
+          newCompany: companyFieldObject
+        })
+        console.log(error)
       })
-    }).catch((error) => {
-      self.setState({
-        newCompany: companyFieldObject
-      })
-      console.log(error)
-    })
   }
 
   handleInput = (input) => {
