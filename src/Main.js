@@ -68,7 +68,7 @@ class Main extends Component {
     // Need to call db to get company data for the logged user
     // Should we also do a schema check?
 
-    this.getCompanyData('https://myt-world.localtunnel.me/api/v1/companies')
+    this.getCompanyData('https://myt-world-restapi.herokuapp.com/api/v1/companies')
   }
 
   selectCompany = (index) => {
@@ -95,7 +95,7 @@ class Main extends Component {
 
   submitCompany = () => {
     let companyJson = companyJsonConverter(this.state.newCompany)
-    let url = 'https://myt-world.localtunnel.me/api/v1/companies'
+    let url = 'https://myt-world-restapi.herokuapp.com/api/v1/companies'
 
     this.postCompanyData(url, companyJson)
       .then(data => {
