@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import SelectionScreen from './SelectionScreen'
 import Company from './Company'
-import { companyFieldObject, companyJsonConverter } from './companyData'
-import { getData, postData } from './utilityFunctions'
-import './styling/Main.css'
+import { companyFieldObject, companyJsonConverter } from './../utilities/companyData'
+import { getData, postData } from './../utilities/utilityFunctions'
+import './../styling/Main.css'
 
 class Main extends Component {
   constructor(props) {

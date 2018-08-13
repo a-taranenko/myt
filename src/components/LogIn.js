@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styling/LogIn.css'
+import './../styling/LogIn.css'
 
 class LogIn extends Component {
   render() {

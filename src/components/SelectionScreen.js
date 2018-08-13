@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {getFieldName} from './utilityFunctions'
+import { getFieldName } from './../utilities/utilityFunctions'
 
 class SelectionScreen extends Component {
   constructor(props) {
