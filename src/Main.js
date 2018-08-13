@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import SelectionScreen from './SelectionScreen'
 import Company from './Company'
-import {companyFieldObject} from './companyData'
-import {companyJsonConverter} from './companyData'
-import {getData} from './utilityFunctions'
-import {postData} from './utilityFunctions'
+import { companyFieldObject, companyJsonConverter } from './companyData'
+import { getData, postData } from './utilityFunctions'
 import './styling/Main.css'
 
 class Main extends Component {
