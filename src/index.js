@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './styling/index.css';
-import App from './components/App';
-import Callback from './components/Callback';
-import { BrowserRouter, Route } from 'react-router-dom';
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './styling/index.css'
+import App from './components/App'
+import Callback from './components/Callback'
+import { BrowserRouter, Route } from 'react-router-dom'
+import registerServiceWorker from './registerServiceWorker'
 
 const Root = () => {
   return (

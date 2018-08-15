@@ -21,9 +21,9 @@ export function getFieldName(field) {
   return upperCaseFields.join(' ')
 }
 
-export const getData = (url) => {
-  let proxyurl = 'https://cors-anywhere.herokuapp.com/'
+let proxyurl = process.env.REACT_APP_PROXY_URL
 
+export const getData = (url) => {
   return (
     fetch(proxyurl + url, {
       method: 'GET',
@@ -42,8 +42,6 @@ export const getData = (url) => {
 }
 
 export const postData = (url, data) => {
-  let proxyurl = 'https://cors-anywhere.herokuapp.com/'
-
   return (
     fetch(proxyurl + url, {
       method: 'POST',
