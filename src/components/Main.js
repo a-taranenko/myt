@@ -23,17 +23,13 @@ class Main extends Component {
     getData(url)
       .then(json => {
         if (json.status === 'success') {
-          self.setState({
-            companies: [...json.data]
-          })
+          self.setState({ companies: [...json.data] })
         } else {
           let error = new Error(`could not retrieve company data`)
           throw error
         }
       }).catch((error) => {
-        self.setState({
-          companies: []
-        })
+        self.setState({ companies: [] })
         console.log(error)
       })
   }
@@ -45,27 +41,19 @@ class Main extends Component {
       postData(url, data)
         .then(json => {
           if (json.status === 'success') {
-            self.setState({
-              newCompany: companyFieldObject
-            })
+            self.setState({ newCompany: companyFieldObject })
           } else {
             let error = new Error(`could not save company data`)
             throw error
           }
         }).catch((error) => {
-          self.setState({
-            newCompany: companyFieldObject
-          })
+          self.setState({ newCompany: companyFieldObject })
           console.log(error)
         })
     )
   }
 
-  componentWillMount() {
-    // The following is just temporary
-    // Need to call db to get company data for the logged user
-    // Should we also do a schema check?
-
+  componentDidMount() {
     this.getCompanyData('https://myt-world-restapi.herokuapp.com/api/v1/companies')
   }
 

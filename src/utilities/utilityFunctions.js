@@ -22,40 +22,37 @@ export function getFieldName(field) {
 }
 
 let proxyurl = process.env.REACT_APP_PROXY_URL
+let fetchInit = {
+  mode: 'cors',
+  headers: {
+    "Content-Type": "application/json"
+  }
+}
 
 export const getData = (url) => {
+  let fetchInitGet = { ...fetchInit, method: 'GET' }
+
   return (
-    fetch(proxyurl + url, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      if (response.status === 404) {
-        let error = new Error(`could not connect to ${url}`)
+    fetch(proxyurl + url, fetchInitGet)
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) return response.json()
+
+        let error = new Error(response.statusText || response.status)
         throw error
-      }
-      return response.json()
-    }).catch(error => {throw error})
+      })
   )
 }
 
 export const postData = (url, data) => {
+  let fetchInitPost = { ...fetchInit, method: 'POST', body: JSON.stringify(data) }
+
   return (
-    fetch(proxyurl + url, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(response => {
-      if (response.status === 404) {
-        let error = new Error(`could not connect to ${url}`)
+    fetch(proxyurl + url, fetchInitPost)
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) return response.json()
+
+        let error = new Error(response.statusText || response.status)
         throw error
-      }
-      return response.json()
-    }).catch(error => { throw error })
+      })
   )
 }
