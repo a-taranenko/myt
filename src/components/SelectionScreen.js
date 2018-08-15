@@ -10,10 +10,6 @@ class SelectionScreen extends Component {
     }
   }
 
-  handleSelection = (event, action) => {
-    (action === 'select') ? this.props.selectCompany(event.target.value) : this.props.deleteCompany(event.target.value)
-  }
-
   renderCompanySelection = (company, index) => {
     return (
       <option key={index}
@@ -23,11 +19,11 @@ class SelectionScreen extends Component {
     )
   }
 
-  getCompanyList = (action) => {
+  getCompanyList = () => {
     let company = this.props.companies.map((company, index) => this.renderCompanySelection(company, index))
 
     return (
-      <select className="companies" defaultValue onChange={(event) => {this.handleSelection(event, action)}}>
+      <select className="companies" defaultValue onChange={(event) => { this.props.selectCompany(event.target.value) }}>
         <option disabled value> -- Select your company -- </option>
         {company}
       </select>
@@ -76,8 +72,7 @@ class SelectionScreen extends Component {
   }
 
   render() {
-    let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList('select') : 'No companies to report')
-    let companyListDelete = ((this.props.companies.length !== 0) ? this.getCompanyList('delete') : 'No companies to report')
+    let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList() : <div className="company-data-await">Awaiting company data...</div>)
     let addMinimize = (this.state.add ? 'Minimize' : 'Add company')
     let addCompanyForm = this.renderAddCompanyForm()
 
@@ -87,7 +82,6 @@ class SelectionScreen extends Component {
           <p>Hello {this.props.username}</p>
           <p>Your role is: {this.props.role}</p>
           <p>Company: {companyList}</p>
-          <p>Delete company: {companyListDelete}</p>
           <button id="add-company" onClick={this.addCompany}>{addMinimize}</button><br />
           {addCompanyForm}
           <button id="logout-button" onClick={this.props.logout}>Log out</button>

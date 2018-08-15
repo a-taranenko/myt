@@ -41,6 +41,19 @@ div.content-container {
   visibility: hidden;
 }
 
+@keyframes fade {
+  from {opacity: 0.5;}
+  to {opacity: 1;}
+}
+
+div.company-data-await {
+  opacity: 0.5;
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+
 #logout-button {
   margin-top: 5px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
