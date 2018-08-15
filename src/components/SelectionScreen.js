@@ -72,7 +72,7 @@ class SelectionScreen extends Component {
   }
 
   render() {
-    let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList() : <div className="company-data-await">Awaiting company data...</div>)
+    let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList() : <span className="company-data-await">Loading...</span>)
     let addMinimize = (this.state.add ? 'Minimize' : 'Add company')
     let addCompanyForm = this.renderAddCompanyForm()
 
