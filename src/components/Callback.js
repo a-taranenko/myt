@@ -2,7 +2,7 @@ import { Component } from 'react'
 
 class Callback extends Component {
   componentDidMount = () => {
-    window.location.href = '/'
+    this.props.auth.handleAuthentication()
   }
 
   render() {

@@ -20,42 +20,20 @@ class App extends Component {
     // will have to determine if the user has logged in or not
   }
 
-  loginEntryCheck = () => {
-    if (this.state.username.length !== 0 && this.state.password.length !== 0) return true
+  // loginEntryCheck = () => {
+  //   if (this.state.username.length !== 0 && this.state.password.length !== 0) return true
 
-    alert('Please fill all required fields')
+  //   alert('Please fill all required fields')
 
-    return false
-  }
+  //   return false
+  // }
 
-  login = (e) => {
-    e.preventDefault()
-
-    if (this.loginEntryCheck()) {
-      // Have to somehow actually log in a user before changing state
-      // This is where we call the db to determine who is logging in
-      // Here, we should know determine the role of the user
-      // We should also deal with situations where we cannot find a user
-
-      // The following is only temporary
-      let role = ''
-      if (this.state.username === 'Anton' || this.state.username === 'Tantely') role = 'admin'
-
-      this.setState({
-        logged: true,
-        password: '',
-        role: role
-      })
-    }
+  login = () => {
+    this.props.auth.login()
   }
 
   logout = () => {
-    this.setState({
-      logged: false,
-      username: '',
-      password: '',
-      role: ''
-    })
+    this.props.auth.logout()
   }
 
   handleInput = (input) => {
@@ -100,7 +78,7 @@ class App extends Component {
   }
 
   render() {
-    return ( this.state.logged ? this.renderMainForm() : this.renderLogInForm() )
+    return (this.props.auth.isLoggedIn() ? this.renderMainForm() : this.renderLogInForm())
   }
 }
 
