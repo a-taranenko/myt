@@ -31,7 +31,7 @@ class Auth {
         window.location.href = '/'
       } else {
         console.log(err)
-        window.location.href = '/'
+        window.location.href = '/error'
       }
     })
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 import Callback from './components/Callback'
+import ErrorLog from './components/ErrorLog'
 import Auth from './utilities/Auth'
 import { BrowserRouter, Route } from 'react-router-dom'
 import registerServiceWorker from './registerServiceWorker'
@@ -16,6 +17,7 @@ const Root = () => {
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/callback" render={(props) => <Callback auth={auth} {...props} />} />
+          <Route path="/error" component={ErrorLog} />
         </div>
       </BrowserRouter>
     </div>
