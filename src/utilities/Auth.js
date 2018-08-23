@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js'
+import history from './history'
 
 class Auth {
   constructor() {
@@ -28,10 +29,12 @@ class Auth {
     this.auth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        window.location.href = '/'
+        // window.location.href = '/'
+        history.push('/')
       } else {
         console.log(err)
-        window.location.href = '/error'
+        // window.location.href = '/error'
+        history.push('/error')
       }
     })
   }
@@ -51,7 +54,8 @@ class Auth {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
 
-    window.location.href = '/'
+    // window.location.href = '/'
+    history.push('/')
   }
 }
 
