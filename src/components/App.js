@@ -72,7 +72,8 @@ class App extends Component {
             username={this.state.username}
             role={this.state.role}
             assignRole={this.assignRole}
-            stripRole={this.stripRole}>
+            stripRole={this.stripRole}
+            auth={this.props.auth}>
       </Main>
     )
   }

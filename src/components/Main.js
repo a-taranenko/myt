@@ -120,7 +120,8 @@ class Main extends Component {
                    deleteCompany={this.deleteCompany}
                    handleInput={this.handleInput}
                    newCompany={this.state.newCompany}
-                   submitCompany={this.submitCompany}>
+                   submitCompany={this.submitCompany}
+                   auth={this.props.auth}>
       </SelectionScreen>
     )
   }

@@ -47,6 +47,7 @@ class SelectionScreen extends Component {
   }
 
   renderAddCompanyForm = () => {
+    let addMinimize = (this.state.add ? 'Minimize' : 'Add company')
     let containerClass = ((this.state.add) ? 'active-add-company-form-container' : 'collapsed-add-company-form-container')
     let formClass = ((this.state.add) ? 'active-add-company-form' : 'collapsed-add-company-form')
     let formFields = Object.keys(this.props.newCompany).map((field, index) => {
@@ -62,19 +63,20 @@ class SelectionScreen extends Component {
     })
 
     return (
-      <div className={containerClass}>
-        <form className={formClass} onSubmit={this.submitCompany}>
-          {formFields}
-          <button id="add-company-button">Submit</button>
-        </form>
+      <div>
+        <button id="add-company" onClick={this.addCompany}>{addMinimize}</button><br />
+        <div className={containerClass}>
+          <form className={formClass} onSubmit={this.submitCompany}>
+            {formFields}
+            <button id="add-company-button">Submit</button>
+          </form>
+        </div>
       </div>
     )
   }
 
   render() {
     let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList() : <span className="company-data-await">Loading...</span>)
-    let addMinimize = (this.state.add ? 'Minimize' : 'Add company')
-    let addCompanyForm = this.renderAddCompanyForm()
 
     return (
       <div className="main-container">
@@ -82,8 +84,11 @@ class SelectionScreen extends Component {
           <p>Hello {this.props.username}</p>
           <p>Your role is: {this.props.role}</p>
           <p>Company: {companyList}</p>
-          <button id="add-company" onClick={this.addCompany}>{addMinimize}</button><br />
-          {addCompanyForm}
+          {
+            this.props.auth.hasPermission('create:company') && (
+              this.renderAddCompanyForm()
+            )
+          }
           <button id="logout-button" onClick={this.props.logout}>Log out</button>
         </div>
       </div>
