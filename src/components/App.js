@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import LogIn from './LogIn'
-import Main from './Main'
+import Gateway from './Gateway'
 // import logo from './logo.svg';
 import './../styling/App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.adminGroupName = 'MyT-admin'
-  }
-
   login = () => {
     this.props.auth.login()
   }
@@ -19,22 +13,22 @@ class App extends Component {
     this.props.auth.logout()
   }
 
-  renderLogInForm = () => {
+  renderLogIn = () => {
     return (
       <LogIn login={this.login}></LogIn>
     )
   }
 
-  renderMainForm = () => {
+  renderGateway = () => {
     return (
-      <Main logout={this.logout}
-            auth={this.props.auth}>
-      </Main>
+      <Gateway logout={this.logout}
+               auth={this.props.auth}>
+      </Gateway>
     )
   }
 
   render() {
-    return (this.props.auth.isLoggedIn() ? this.renderMainForm() : this.renderLogInForm())
+    return (this.props.auth.isLoggedIn() ? this.renderGateway() : this.renderLogIn())
   }
 }
 

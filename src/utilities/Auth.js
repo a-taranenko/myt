@@ -29,6 +29,11 @@ class Auth {
     return userPermissions.includes(requiredPermission)
   }
 
+  hasRole = (requiredRole) => {
+    const userRoles = localStorage.getItem('roles').split(' ')
+    return userRoles.includes(requiredRole)
+  }
+
   getDisplayName = () => {
     return localStorage.getItem('displayName')
   }
