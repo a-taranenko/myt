@@ -8,11 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      logged: false,
-      username: '',
-      password: ''
-    }
+    this.adminGroupName = 'MyT-admin'
   }
 
   login = () => {
