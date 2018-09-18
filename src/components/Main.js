@@ -58,8 +58,6 @@ class Main extends Component {
   }
 
   selectCompany = (index) => {
-    if (this.props.role !== 'admin') this.props.assignRole()
-
     this.setState({
       selected: true,
       selectedCompany: [...this.state.companies][index]
@@ -67,8 +65,6 @@ class Main extends Component {
   }
 
   deselectCompany = () => {
-    if (this.props.role !== 'admin') this.props.stripRole()
-
     this.setState({
       selected: false,
       selectedCompany: []
@@ -104,24 +100,22 @@ class Main extends Component {
   renderCompany = () => {
     return (
       <Company company={this.state.selectedCompany}
-               role={this.props.role}
-               deselectCompany={this.deselectCompany}>
+               deselectCompany={this.deselectCompany}
+               auth={this.props.auth}>
       </Company>
     )
   }
 
   renderSelectionScreen = () => {
     return (
-      <SelectionScreen username={this.props.username}
-                   logout={this.props.logout}
-                   companies={this.state.companies}
-                   role={this.props.role}
-                   selectCompany={this.selectCompany}
-                   deleteCompany={this.deleteCompany}
-                   handleInput={this.handleInput}
-                   newCompany={this.state.newCompany}
-                   submitCompany={this.submitCompany}
-                   auth={this.props.auth}>
+      <SelectionScreen logout={this.props.logout}
+                       companies={this.state.companies}
+                       selectCompany={this.selectCompany}
+                       deleteCompany={this.deleteCompany}
+                       handleInput={this.handleInput}
+                       newCompany={this.state.newCompany}
+                       submitCompany={this.submitCompany}
+                       auth={this.props.auth}>
       </SelectionScreen>
     )
   }

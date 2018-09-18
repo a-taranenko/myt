@@ -77,12 +77,12 @@ class SelectionScreen extends Component {
 
   render() {
     let companyList = ((this.props.companies.length !== 0) ? this.getCompanyList() : <span className="company-data-await">Loading...</span>)
+    let displayName = this.props.auth.getDisplayName()
 
     return (
       <div className="main-container">
         <div className="content-container">
-          <p>Hello {this.props.username}</p>
-          <p>Your role is: {this.props.role}</p>
+          <p>Hello {displayName}</p>
           <p>Company: {companyList}</p>
           {
             this.props.auth.hasPermission('create:company') && (

@@ -11,22 +11,9 @@ class App extends Component {
     this.state = {
       logged: false,
       username: '',
-      password: '',
-      role: ''
+      password: ''
     }
   }
-
-  componentWillMount() {
-    // will have to determine if the user has logged in or not
-  }
-
-  // loginEntryCheck = () => {
-  //   if (this.state.username.length !== 0 && this.state.password.length !== 0) return true
-
-  //   alert('Please fill all required fields')
-
-  //   return false
-  // }
 
   login = () => {
     this.props.auth.login()
@@ -36,43 +23,15 @@ class App extends Component {
     this.props.auth.logout()
   }
 
-  handleInput = (input) => {
-    this.setState({
-      [input.target.id]: input.target.value
-    })
-  }
-
-  assignRole = () => {
-    // Need to call db to get role
-
-    this.setState({
-      role: 'owner'
-    })
-  }
-
-  stripRole = () => {
-    this.setState({
-      role: ''
-    })
-  }
-
   renderLogInForm = () => {
     return (
-      <LogIn login={this.login}
-             handleInput={this.handleInput}
-             username={this.state.username}
-             password={this.state.password}>
-      </LogIn>
+      <LogIn login={this.login}></LogIn>
     )
   }
 
   renderMainForm = () => {
     return (
       <Main logout={this.logout}
-            username={this.state.username}
-            role={this.state.role}
-            assignRole={this.assignRole}
-            stripRole={this.stripRole}
             auth={this.props.auth}>
       </Main>
     )

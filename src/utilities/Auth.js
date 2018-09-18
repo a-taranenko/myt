@@ -12,7 +12,8 @@ class Auth {
       scope: process.env.REACT_APP_SCOPE
     })
 
-    this.namespace = 'https://myt-world.com/user_authorization_info'
+    this.authorizationNamespace = 'https://myt-world.com/user-authorization-info'
+    this.metadataNamespace = 'https://myt-world.com/meta-data'
   }
 
   login = () => {
@@ -20,12 +21,16 @@ class Auth {
   }
 
   stringifyUserAuthData = (authResult, userAuthData) => {
-    return authResult.idTokenPayload[this.namespace][userAuthData].join(' ')
+    return authResult.idTokenPayload[this.authorizationNamespace][userAuthData].join(' ')
   }
 
   hasPermission = (requiredPermission) => {
     const userPermissions = localStorage.getItem('permissions').split(' ')
     return userPermissions.includes(requiredPermission)
+  }
+
+  getDisplayName = () => {
+    return localStorage.getItem('displayName')
   }
 
   setSession = (authResult) => {
@@ -34,6 +39,7 @@ class Auth {
     localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
+    localStorage.setItem('displayName', authResult.idTokenPayload[this.metadataNamespace].displayName)
     localStorage.setItem('groups', this.stringifyUserAuthData(authResult, 'groups'))
     localStorage.setItem('roles', this.stringifyUserAuthData(authResult, 'roles'))
     localStorage.setItem('permissions', this.stringifyUserAuthData(authResult, 'permissions'))
@@ -45,6 +51,7 @@ class Auth {
         this.setSession(authResult)
         // window.location.href = '/'
         history.push('/')
+        // console.log(authResult)
       } else {
         console.log(err)
         // window.location.href = '/error'
