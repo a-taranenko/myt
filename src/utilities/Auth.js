@@ -81,14 +81,11 @@ class Auth {
   }
 
   logout = () => {
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('id_token')
-    localStorage.removeItem('expires_at')
-    localStorage.removeItem('displayName')
-    localStorage.removeItem('email')
-    localStorage.removeItem('groups')
-    localStorage.removeItem('roles')
-    localStorage.removeItem('permissions')
+    let storageItems = ['access_token', 'id_token', 'expires_at', 'displayName', 'email', 'groups', 'roles', 'permissions']
+
+    storageItems.forEach(item => {
+      localStorage.removeItem(item)
+    })
 
     // window.location.href = '/'
     history.push('/')

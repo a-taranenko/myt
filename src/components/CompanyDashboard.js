@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getData, postData } from './../utilities/utilityFunctions'
+import { userSpecificCompanyApiEndpoint } from './../utilities/apiEndpointData'
 
 class CompanyDashboard extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class CompanyDashboard extends Component {
 
       }
     }
+    this.userCompanyApi = userSpecificCompanyApiEndpoint
   }
 
   componentDidMount() {

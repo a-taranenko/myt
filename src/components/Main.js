@@ -3,6 +3,7 @@ import SelectionScreen from './SelectionScreen'
 import Company from './Company'
 import { companyFieldObject, companyJsonConverter } from './../utilities/companyData'
 import { getData, postData } from './../utilities/utilityFunctions'
+import { companiesApiEndpoint } from './../utilities/apiEndpointData'
 import './../styling/Main.css'
 
 class Main extends Component {
@@ -15,6 +16,7 @@ class Main extends Component {
       selected: false,
       newCompany: companyFieldObject
     }
+    this.companiesApi = companiesApiEndpoint
   }
 
   getCompanyData = (url) => {
@@ -54,7 +56,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    this.getCompanyData('https://myt-world-restapi.herokuapp.com/api/v1/companies')
+    this.getCompanyData(this.companiesApi)
   }
 
   selectCompany = (index) => {
@@ -77,11 +79,10 @@ class Main extends Component {
 
   submitCompany = () => {
     let companyJson = companyJsonConverter(this.state.newCompany)
-    let url = 'https://myt-world-restapi.herokuapp.com/api/v1/companies'
 
-    this.postCompanyData(url, companyJson)
+    this.postCompanyData(this.companiesApi, companyJson)
       .then(data => {
-        this.getCompanyData(url)
+        this.getCompanyData(this.companiesApi)
       })
   }
 
