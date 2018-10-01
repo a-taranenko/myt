@@ -38,6 +38,10 @@ class Auth {
     return localStorage.getItem('displayName')
   }
 
+  getEmail = () => {
+    return localStorage.getItem('email')
+  }
+
   setSession = (authResult) => {
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime())
 
@@ -45,6 +49,7 @@ class Auth {
     localStorage.setItem('id_token', authResult.idToken)
     localStorage.setItem('expires_at', expiresAt)
     localStorage.setItem('displayName', authResult.idTokenPayload[this.metadataNamespace].displayName)
+    localStorage.setItem('email', authResult.idTokenPayload[this.metadataNamespace].email)
     localStorage.setItem('groups', this.stringifyUserAuthData(authResult, 'groups'))
     localStorage.setItem('roles', this.stringifyUserAuthData(authResult, 'roles'))
     localStorage.setItem('permissions', this.stringifyUserAuthData(authResult, 'permissions'))
@@ -79,6 +84,8 @@ class Auth {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
+    localStorage.removeItem('displayName')
+    localStorage.removeItem('email')
     localStorage.removeItem('groups')
     localStorage.removeItem('roles')
     localStorage.removeItem('permissions')

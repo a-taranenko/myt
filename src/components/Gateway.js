@@ -12,18 +12,7 @@ class Gateway extends Component {
     }
   }
 
-  componentDidMount = () => {
-    // run getCompanyData
-  }
-
-  getCompanyData = () => {
-    // fetch the correct company (plus employee/product data) based on the user\
-    // change state so that CompanyDashboard could be rendered
-  }
-
   renderCompanyDashboard = () => {
-    // if (Object.keys(this.state.company).length === 0) return null
-
     return (
       <CompanyDashboard logout={this.props.logout}
                         auth={this.props.auth}>

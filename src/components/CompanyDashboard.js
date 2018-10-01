@@ -1,11 +1,53 @@
 import React, { Component } from 'react'
+import { getData, postData } from './../utilities/utilityFunctions'
 
 class CompanyDashboard extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      company: {
+
+      }
+    }
+  }
+
+  componentDidMount() {
+    let email = this.props.auth.getEmail()
+    this.getCompanyData(`https://myt-world-restapi.herokuapp.com/api/v1/companies/email/${email}`)
+  }
+
+  getCompanyData = (url) => {
+    let self = this
+
+    getData(url)
+      .then(json => {
+        if (json.status === 'success') {
+          self.setState({ company: {...json.data} })
+        } else {
+          let error = new Error(`could not retrieve company data`)
+          throw error
+        }
+      }).catch((error) => {
+        self.setState({ company: {} })
+        console.log(error)
+      })
+  }
+
   renderCompanyData = () => {
+    if (Object.keys(this.state.company).length === 0) {
+      return (
+        <div>
+          <h1>Company Data Section</h1>
+          <p>Company data that the user can change.</p>
+        </div>
+      )
+    }
+
     return (
       <div>
         <h1>Company Data Section</h1>
-        <p>Company data that the user can change.</p>
+        <p>{this.state.company.name}</p>
       </div>
     )
   }
