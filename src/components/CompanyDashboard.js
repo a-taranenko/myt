@@ -41,12 +41,7 @@ class CompanyDashboard extends Component {
   }
 
   renderCompanyData = () => {
-    let companyData
-
-    if (Object.keys(this.state.company).length === 0) {
-      companyData = <p>Company data that the user can change.</p>
-    } else {
-      companyData = <div>
+    let companyData = <div>
         <div>Name: <input type="text" value={this.state.company.name} /></div><br />
         <fieldset>
           <legend>Address</legend>
@@ -60,7 +55,6 @@ class CompanyDashboard extends Component {
         <div>Phone: <input type="text" value={this.state.company.phone} /></div>
         <div>Email: <input type="text" value={this.state.company.email} /></div>
       </div>
-    }
 
     return (
       <div>
@@ -81,7 +75,7 @@ class CompanyDashboard extends Component {
         <form>
           <fieldset>
             <legend>Employee Data</legend>
-            <p>List of employees that the user can change.</p>
+            <p>Loading...</p>
           </fieldset>
         </form>
       </div>
@@ -95,7 +89,7 @@ class CompanyDashboard extends Component {
         <form>
           <fieldset>
             <legend>Product Data Section</legend>
-            <p>List of products that the user can change.</p>
+            <p>Loading...</p>
           </fieldset>
         </form>
       </div>
@@ -103,15 +97,18 @@ class CompanyDashboard extends Component {
   }
 
   render() {
+    if (Object.keys(this.state.company).length === 0) {
+      return (
+        <div>
+          <p>Loading...</p>
+          <button id="logout-button" onClick={this.props.logout}>Log out</button>
+        </div>
+      )
+    }
+
     return (
       <div>
-        <h1>
-          {
-            (Object.keys(this.state.company).length !== 0) && (
-              this.state.company.name
-            )
-          }
-        </h1>
+        <h1>{this.state.company.name}</h1>
         {/* <p>Hello {this.props.auth.getDisplayName()}! You are not admin. No full access for you!</p> */}
         {
           this.props.auth.hasRole('owner') && (
