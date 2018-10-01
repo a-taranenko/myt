@@ -7,16 +7,20 @@ class CompanyDashboard extends Component {
     super(props)
 
     this.state = {
-      company: {
-
-      }
+      company: {}
     }
     this.userCompanyApi = userSpecificCompanyApiEndpoint
   }
 
   componentDidMount() {
-    let email = this.props.auth.getEmail()
-    this.getCompanyData(`https://myt-world-restapi.herokuapp.com/api/v1/companies/email/${email}`)
+    if (this.props.company) {
+      this.setState({
+        company: this.props.company
+      })
+    } else {
+      let email = this.props.auth.getEmail()
+      this.getCompanyData(this.userCompanyApi + email)
+    }
   }
 
   getCompanyData = (url) => {
@@ -37,19 +41,35 @@ class CompanyDashboard extends Component {
   }
 
   renderCompanyData = () => {
+    let companyData
+
     if (Object.keys(this.state.company).length === 0) {
-      return (
-        <div>
-          <h1>Company Data Section</h1>
-          <p>Company data that the user can change.</p>
-        </div>
-      )
+      companyData = <p>Company data that the user can change.</p>
+    } else {
+      companyData = <div>
+        <div>Name: <input type="text" value={this.state.company.name} /></div><br />
+        <fieldset>
+          <legend>Address</legend>
+          Suite: <input type="text" value={this.state.company.address.suite} /><br />
+          Street number: <input type="text" value={this.state.company.address.streetNumber} /><br />
+          Street name: <input type="text" value={this.state.company.address.streetName} /><br />
+          City: <input type="text" value={this.state.company.address.city} /><br />
+          Province: <input type="text" value={this.state.company.address.province} /><br />
+          Country: <input type="text" value={this.state.company.address.country} />
+        </fieldset><br />
+        <div>Phone: <input type="text" value={this.state.company.phone} /></div>
+        <div>Email: <input type="text" value={this.state.company.email} /></div>
+      </div>
     }
 
     return (
       <div>
-        <h1>Company Data Section</h1>
-        <p>{this.state.company.name}</p>
+        <form>
+          <fieldset>
+            <legend>Company Info</legend>
+            {companyData}
+          </fieldset>
+        </form>
       </div>
     )
   }
@@ -57,8 +77,13 @@ class CompanyDashboard extends Component {
   renderEmployeeData = () => {
     return (
       <div>
-        <h1>Employee Data Section</h1>
-        <p>List of employees that the user can change.</p>
+        <br />
+        <form>
+          <fieldset>
+            <legend>Employee Data</legend>
+            <p>List of employees that the user can change.</p>
+          </fieldset>
+        </form>
       </div>
     )
   }
@@ -66,8 +91,13 @@ class CompanyDashboard extends Component {
   renderProductData = () => {
     return (
       <div>
-        <h1>Product Data Section</h1>
-        <p>List of products that the user can change.</p>
+        <br />
+        <form>
+          <fieldset>
+            <legend>Product Data Section</legend>
+            <p>List of products that the user can change.</p>
+          </fieldset>
+        </form>
       </div>
     )
   }
@@ -75,7 +105,14 @@ class CompanyDashboard extends Component {
   render() {
     return (
       <div>
-        <p>Hello {this.props.auth.getDisplayName()}! You are not admin. No full access for you!</p>
+        <h1>
+          {
+            (Object.keys(this.state.company).length !== 0) && (
+              this.state.company.name
+            )
+          }
+        </h1>
+        {/* <p>Hello {this.props.auth.getDisplayName()}! You are not admin. No full access for you!</p> */}
         {
           this.props.auth.hasRole('owner') && (
             this.renderCompanyData()

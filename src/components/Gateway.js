@@ -14,7 +14,8 @@ class Gateway extends Component {
 
   renderCompanyDashboard = () => {
     return (
-      <CompanyDashboard logout={this.props.logout}
+      <CompanyDashboard company={null}
+                        logout={this.props.logout}
                         auth={this.props.auth}>
       </CompanyDashboard>
     )
