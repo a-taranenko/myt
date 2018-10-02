@@ -56,3 +56,17 @@ export const postData = (url, data) => {
       })
   )
 }
+
+export const putData = (url, data) => {
+  let fetchInitPost = { ...fetchInit, method: 'PUT', body: JSON.stringify(data) }
+
+  return (
+    fetch(proxyurl + url, fetchInitPost)
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) return response.json()
+
+        let error = new Error(response.statusText || response.status)
+        throw error
+      })
+  )
+}

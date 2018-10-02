@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { getData, postData } from './../utilities/utilityFunctions'
-import { userSpecificCompanyApiEndpoint } from './../utilities/apiEndpointData'
+import { getData, putData } from './../utilities/utilityFunctions'
+import { companiesApiEndpoint, userSpecificCompanyApiEndpoint } from './../utilities/apiEndpointData'
 
 class CompanyDashboard extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class CompanyDashboard extends Component {
     this.state = {
       company: {}
     }
+    this.companiesApiEndpoint = companiesApiEndpoint
     this.userCompanyApi = userSpecificCompanyApiEndpoint
   }
 
@@ -40,28 +41,86 @@ class CompanyDashboard extends Component {
       })
   }
 
+  updateCompanyData = (url) => {
+    let self = this
+
+    return (putData(url, this.state.company)
+      .then(json => {
+        if (json.status === 'success') {
+          self.setState({ company: {} })
+        } else {
+          let error = new Error(`could not update company data`)
+          throw error
+        }
+      })
+      .catch(error => {
+        self.setState({ company: {} })
+        console.log(error)
+      })
+    )
+  }
+
+  submitCompany = (e) => {
+    e.preventDefault()
+
+    let email = this.props.auth.getEmail()
+    this.updateCompanyData(this.companiesApiEndpoint)
+      .then(data => {
+        this.getCompanyData(this.userCompanyApi + email)
+      })
+  }
+
+  handleChange = (event) => {
+    let name = event.target.name
+    let value = event.target.value
+
+    this.setState(prevState => ({
+      company: {
+        ...prevState.company,
+        [name]: value
+      }
+    }))
+  }
+
+  handleChangeAddress = (event) => {
+    let name = event.target.name
+    let value = event.target.value
+
+    this.setState(prevState => ({
+      company: {
+        ...prevState.company,
+        address: {
+          ...prevState.company.address,
+          [name]: value
+        }
+      }
+    }))
+  }
+
   renderCompanyData = () => {
     let companyData = <div>
-        <div>Name: <input type="text" value={this.state.company.name} /></div><br />
-        <fieldset>
-          <legend>Address</legend>
-          Suite: <input type="text" value={this.state.company.address.suite} /><br />
-          Street number: <input type="text" value={this.state.company.address.streetNumber} /><br />
-          Street name: <input type="text" value={this.state.company.address.streetName} /><br />
-          City: <input type="text" value={this.state.company.address.city} /><br />
-          Province: <input type="text" value={this.state.company.address.province} /><br />
-          Country: <input type="text" value={this.state.company.address.country} />
-        </fieldset><br />
-        <div>Phone: <input type="text" value={this.state.company.phone} /></div>
-        <div>Email: <input type="text" value={this.state.company.email} /></div>
-      </div>
+      <div>Name: <input type="text" name="name" value={this.state.company.name} onChange={this.handleChange} /></div><br />
+      <fieldset>
+        <legend>Address</legend>
+        Suite: <input type="text" name="suite" value={this.state.company.address.suite} onChange={this.handleChangeAddress} /><br />
+        Street number: <input type="text" name="streetNumber" value={this.state.company.address.streetNumber} onChange={this.handleChangeAddress} /><br />
+        Street name: <input type="text" name="streetName" value={this.state.company.address.streetName} onChange={this.handleChangeAddress} /><br />
+        City: <input type="text" name="city" value={this.state.company.address.city} onChange={this.handleChangeAddress} /><br />
+        Province: <input type="text" name="province" value={this.state.company.address.province} onChange={this.handleChangeAddress} /><br />
+        Country: <input type="text" name="country" value={this.state.company.address.country} onChange={this.handleChangeAddress} />
+      </fieldset><br />
+      <div>Phone: <input type="text" name="phone" value={this.state.company.phone} onChange={this.handleChange} /></div>
+      <div>Email: <input type="text" name="email" value={this.state.company.email} onChange={this.handleChange} /></div>
+    </div>
 
     return (
       <div>
-        <form>
+        <form onSubmit={this.submitCompany}>
           <fieldset>
             <legend>Company Info</legend>
             {companyData}
+            <br />
+            <button>Update</button>
           </fieldset>
         </form>
       </div>
