@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import SelectionScreen from './SelectionScreen'
-import Company from './Company'
+import CompanyDashboard from './CompanyDashboard'
 import { companyFieldObject, companyJsonConverter } from './../utilities/companyData'
 import { getData, postData } from './../utilities/utilityFunctions'
 import { companiesApiEndpoint } from './../utilities/apiEndpointData'
@@ -100,10 +100,11 @@ class Main extends Component {
 
   renderCompany = () => {
     return (
-      <Company company={this.state.selectedCompany}
+      <CompanyDashboard company={this.state.selectedCompany}
                deselectCompany={this.deselectCompany}
+               logout={this.props.logout}
                auth={this.props.auth}>
-      </Company>
+      </CompanyDashboard>
     )
   }
 

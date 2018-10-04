@@ -170,7 +170,7 @@ class CompanyDashboard extends Component {
         <h1>{this.state.company.name}</h1>
         {/* <p>Hello {this.props.auth.getDisplayName()}! You are not admin. No full access for you!</p> */}
         {
-          this.props.auth.hasRole('owner') && (
+          (this.props.auth.hasRole('owner') || this.props.auth.hasRole('admin')) && (
             this.renderCompanyData()
           )
         }
@@ -180,6 +180,11 @@ class CompanyDashboard extends Component {
           )
         }
         {this.renderProductData()}
+        {
+          this.props.auth.hasRole('admin') && (
+            <div><button id="deselect-company-button" onClick={this.props.deselectCompany}>Deselect</button><br /></div>
+          )
+        }
         <button id="logout-button" onClick={this.props.logout}>Log out</button>
       </div>
     )
