@@ -14,6 +14,7 @@ class Main extends Component {
       companies: [],
       selectedCompany: [],
       selected: false,
+      index: 0,
       newCompany: companyFieldObject
     }
     this.companiesApi = companiesApiEndpoint
@@ -22,18 +23,23 @@ class Main extends Component {
   getCompanyData = (url) => {
     let self = this
 
-    getData(url)
-      .then(json => {
-        if (json.status === 'success') {
-          self.setState({ companies: [...json.data] })
-        } else {
-          let error = new Error(`could not retrieve company data`)
-          throw error
-        }
-      }).catch((error) => {
-        self.setState({ companies: [] })
-        console.log(error)
-      })
+    return (
+      getData(url)
+        .then(json => {
+          if (json.status === 'success') {
+            self.setState({
+              companies: [...json.data],
+              selectCompany: [...json.data][this.state.index]
+            })
+          } else {
+            let error = new Error(`could not retrieve company data`)
+            throw error
+          }
+        }).catch((error) => {
+          self.setState({ companies: [] })
+          console.log(error)
+        })
+    )
   }
 
   postCompanyData = (url, data) => {
@@ -62,6 +68,7 @@ class Main extends Component {
   selectCompany = (index) => {
     this.setState({
       selected: true,
+      index: index,
       selectedCompany: [...this.state.companies][index]
     })
   }
@@ -100,24 +107,27 @@ class Main extends Component {
 
   renderCompany = () => {
     return (
-      <CompanyDashboard company={this.state.selectedCompany}
-               deselectCompany={this.deselectCompany}
-               logout={this.props.logout}
-               auth={this.props.auth}>
+      <CompanyDashboard
+        company={this.state.selectedCompany}
+        getUpdateCompanyData={this.getCompanyData}
+        deselectCompany={this.deselectCompany}
+        logout={this.props.logout}
+        auth={this.props.auth}>
       </CompanyDashboard>
     )
   }
 
   renderSelectionScreen = () => {
     return (
-      <SelectionScreen logout={this.props.logout}
-                       companies={this.state.companies}
-                       selectCompany={this.selectCompany}
-                       deleteCompany={this.deleteCompany}
-                       handleInput={this.handleInput}
-                       newCompany={this.state.newCompany}
-                       submitCompany={this.submitCompany}
-                       auth={this.props.auth}>
+      <SelectionScreen
+        logout={this.props.logout}
+        companies={this.state.companies}
+        selectCompany={this.selectCompany}
+        deleteCompany={this.deleteCompany}
+        handleInput={this.handleInput}
+        newCompany={this.state.newCompany}
+        submitCompany={this.submitCompany}
+        auth={this.props.auth}>
       </SelectionScreen>
     )
   }

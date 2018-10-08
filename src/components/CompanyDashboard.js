@@ -7,7 +7,8 @@ class CompanyDashboard extends Component {
     super(props)
 
     this.state = {
-      company: {}
+      company: {},
+      updating: true
     }
     this.companiesApiEndpoint = companiesApiEndpoint
     this.userCompanyApi = userSpecificCompanyApiEndpoint
@@ -16,7 +17,8 @@ class CompanyDashboard extends Component {
   componentDidMount() {
     if (this.props.company) {
       this.setState({
-        company: this.props.company
+        company: this.props.company,
+        updating: false
       })
     } else {
       let email = this.props.auth.getEmail()
@@ -30,7 +32,10 @@ class CompanyDashboard extends Component {
     getData(url)
       .then(json => {
         if (json.status === 'success') {
-          self.setState({ company: {...json.data} })
+          self.setState({
+            company: {...json.data},
+            updating: false
+          })
         } else {
           let error = new Error(`could not retrieve company data`)
           throw error
@@ -44,11 +49,11 @@ class CompanyDashboard extends Component {
   updateCompanyData = (url) => {
     let self = this
 
+    this.setState({ updating: true })
+
     return (putData(url, this.state.company)
       .then(json => {
-        if (json.status === 'success') {
-          self.setState({ company: {} })
-        } else {
+        if (json.status !== 'success') {
           let error = new Error(`could not update company data`)
           throw error
         }
@@ -64,9 +69,17 @@ class CompanyDashboard extends Component {
     e.preventDefault()
 
     let email = this.props.auth.getEmail()
+
     this.updateCompanyData(this.companiesApiEndpoint)
       .then(data => {
-        this.getCompanyData(this.userCompanyApi + email)
+        if (this.props.auth.hasRole('admin')) {
+          this.props.getUpdateCompanyData(this.companiesApiEndpoint)
+            .then(() => {
+              this.setState({ updating: false })
+            })
+        } else {
+          this.getCompanyData(this.userCompanyApi + email)
+        }
       })
   }
 
@@ -156,7 +169,7 @@ class CompanyDashboard extends Component {
   }
 
   render() {
-    if (Object.keys(this.state.company).length === 0) {
+    if (this.state.updating) {
       return (
         <div>
           <p>Loading...</p>
@@ -168,7 +181,6 @@ class CompanyDashboard extends Component {
     return (
       <div>
         <h1>{this.state.company.name}</h1>
-        {/* <p>Hello {this.props.auth.getDisplayName()}! You are not admin. No full access for you!</p> */}
         {
           (this.props.auth.hasRole('owner') || this.props.auth.hasRole('admin')) && (
             this.renderCompanyData()
