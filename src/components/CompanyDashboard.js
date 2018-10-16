@@ -10,19 +10,17 @@ class CompanyDashboard extends Component {
       company: {},
       updating: true
     }
-    this.companiesApiEndpoint = companiesApiEndpoint
-    this.userCompanyApi = userSpecificCompanyApiEndpoint
   }
 
   componentDidMount() {
-    if (this.props.company) {
+    if (this.props.company && this.props.auth.hasRole('admin')) {
       this.setState({
         company: this.props.company,
         updating: false
       })
     } else {
       let email = this.props.auth.getEmail()
-      this.getCompanyData(this.userCompanyApi + email)
+      this.getCompanyData(userSpecificCompanyApiEndpoint + email)
     }
   }
 
@@ -32,10 +30,27 @@ class CompanyDashboard extends Component {
     getData(url)
       .then(json => {
         if (json.status === 'success') {
-          self.setState({
-            company: {...json.data},
-            updating: false
-          })
+
+          if (this.props.auth.hasRole('admin') || this.props.auth.hasRole('owner')) {
+            self.setState({
+              company: { ...json.data },
+              updating: false
+            })
+          } else {
+            let company = { ...json.data }
+            let products = company.products
+
+            delete company.products
+            this.props.auth.storeCompanyData(company)
+
+            self.setState({
+              company: {
+                name: company.name,
+                products: [...products] },
+              updating: false
+            })
+          }
+
         } else {
           let error = new Error(`could not retrieve company data`)
           throw error
@@ -48,10 +63,18 @@ class CompanyDashboard extends Component {
 
   updateCompanyData = (url) => {
     let self = this
+    let company
 
     this.setState({ updating: true })
 
-    return (putData(url, this.state.company)
+    if (this.props.auth.hasRole('admin') || this.props.auth.hasRole('owner')) {
+      company = this.state.company
+    } else {
+      company = JSON.parse(localStorage.getItem('company_data'))
+      company.products = this.state.company.products
+    }
+
+    return (putData(url, company)
       .then(json => {
         if (json.status !== 'success') {
           let error = new Error(`could not update company data`)
@@ -70,15 +93,15 @@ class CompanyDashboard extends Component {
 
     let email = this.props.auth.getEmail()
 
-    this.updateCompanyData(this.companiesApiEndpoint)
+    this.updateCompanyData(companiesApiEndpoint)
       .then(data => {
         if (this.props.auth.hasRole('admin')) {
-          this.props.getUpdateCompanyData(this.companiesApiEndpoint)
+          this.props.getUpdateCompanyData(companiesApiEndpoint)
             .then(() => {
               this.setState({ updating: false })
             })
         } else {
-          this.getCompanyData(this.userCompanyApi + email)
+          this.getCompanyData(userSpecificCompanyApiEndpoint + email)
         }
       })
   }
@@ -144,10 +167,12 @@ class CompanyDashboard extends Component {
     return (
       <div>
         <br />
-        <form>
+        <form onSubmit={this.submitCompany}>
           <fieldset>
             <legend>Employee Data</legend>
             <p>Loading...</p>
+            <br />
+            <button>Update</button>
           </fieldset>
         </form>
       </div>
@@ -158,10 +183,12 @@ class CompanyDashboard extends Component {
     return (
       <div>
         <br />
-        <form>
+        <form onSubmit={this.submitCompany}>
           <fieldset>
             <legend>Product Data Section</legend>
             <p>Loading...</p>
+            <br />
+            <button>Update</button>
           </fieldset>
         </form>
       </div>
@@ -173,7 +200,7 @@ class CompanyDashboard extends Component {
       return (
         <div>
           <p>Loading...</p>
-          <button id="logout-button" onClick={this.props.logout}>Log out</button>
+          <button id="logout-button" onClick={this.props.auth.logout}>Log out</button>
         </div>
       )
     }
@@ -197,7 +224,7 @@ class CompanyDashboard extends Component {
             <div><button id="deselect-company-button" onClick={this.props.deselectCompany}>Deselect</button><br /></div>
           )
         }
-        <button id="logout-button" onClick={this.props.logout}>Log out</button>
+        <button id="logout-button" onClick={this.props.auth.logout}>Log out</button>
       </div>
     )
   }

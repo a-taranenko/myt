@@ -89,7 +89,7 @@ class SelectionScreen extends Component {
               this.renderAddCompanyForm()
             )
           }
-          <button id="logout-button" onClick={this.props.logout}>Log out</button>
+          <button id="logout-button" onClick={this.props.auth.logout}>Log out</button>
         </div>
       </div>
     )

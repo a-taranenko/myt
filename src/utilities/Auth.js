@@ -42,6 +42,10 @@ class Auth {
     return localStorage.getItem('email')
   }
 
+  storeCompanyData = (companyJson) => {
+    localStorage.setItem('company_data', JSON.stringify(companyJson))
+  }
+
   setSession = (authResult) => {
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime())
 
@@ -59,12 +63,9 @@ class Auth {
     this.auth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        // window.location.href = '/'
         history.push('/')
-        // console.log(authResult)
       } else {
         console.log(err)
-        // window.location.href = '/error'
         history.push('/error')
       }
     })
@@ -87,7 +88,6 @@ class Auth {
       localStorage.removeItem(item)
     })
 
-    // window.location.href = '/'
     history.push('/')
   }
 }

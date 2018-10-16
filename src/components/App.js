@@ -5,23 +5,15 @@ import Gateway from './Gateway'
 import './../styling/App.css';
 
 class App extends Component {
-  login = () => {
-    this.props.auth.login()
-  }
-
-  logout = () => {
-    this.props.auth.logout()
-  }
-
   renderLogIn = () => {
     return (
-      <LogIn login={this.login}></LogIn>
+      <LogIn login={this.props.auth.login}></LogIn>
     )
   }
 
   renderGateway = () => {
     return (
-      <Gateway logout={this.logout}
+      <Gateway logout={this.props.auth.logout}
                auth={this.props.auth}>
       </Gateway>
     )

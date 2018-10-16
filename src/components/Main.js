@@ -111,7 +111,6 @@ class Main extends Component {
         company={this.state.selectedCompany}
         getUpdateCompanyData={this.getCompanyData}
         deselectCompany={this.deselectCompany}
-        logout={this.props.logout}
         auth={this.props.auth}>
       </CompanyDashboard>
     )
@@ -120,7 +119,6 @@ class Main extends Component {
   renderSelectionScreen = () => {
     return (
       <SelectionScreen
-        logout={this.props.logout}
         companies={this.state.companies}
         selectCompany={this.selectCompany}
         deleteCompany={this.deleteCompany}
